@@ -102,6 +102,10 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .tag.elder{background:var(--teal-l);color:var(--teal);font-weight:600;}
 .tag.kid{background:var(--pink-l);color:var(--pink);font-weight:600;}
 .tag.bad{background:#f3f4f6;color:#9ca3af;text-decoration:line-through;}
+.tag.confirmed{background:#15803d;color:#fff;font-weight:700;}
+.booked-badge{position:absolute;top:10px;right:10px;background:#15803d;color:#fff;border-radius:8px;padding:2px 9px;font-size:0.68rem;font-weight:700;pointer-events:none;z-index:2;}
+.card.booked{border-color:#16a34a;}
+.card.booked .check-badge{display:none;}
 
 /* GROUP BANNER */
 .group-banner{background:#fff;border:2px solid #e5e7eb;border-radius:12px;padding:12px 16px;margin-bottom:20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
@@ -373,7 +377,8 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
       <button class="sel-btn" onclick="event.stopPropagation();pick('tko',1,this.parentElement)">选择此方案</button>
     </div>
 
-    <div class="card" data-loc="tko" data-opt="2" onclick="pick('tko',2,this)">
+    <div class="card booked" data-loc="tko" data-opt="2" onclick="pick('tko',2,this)">
+      <span class="booked-badge">🔒 已预订</span>
       <span class="card-source airbnb">🏠 Airbnb</span>
       <div class="card-name">Lake Ophua House<span class="rec-tag">💰省钱</span></div>
       <a class="card-link" href="https://www.airbnb.com/s/Lake-Tekapo--New-Zealand/homes?checkin=2026-12-22&checkout=2026-12-23&adults=8&min_bedrooms=4" target="_blank" onclick="event.stopPropagation()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Airbnb 查看</a>
@@ -381,7 +386,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
         <span class="tag price">MYR 2,033/晚</span>
         <span class="tag rating">⭐ 4.91 · 33条</span>
         <span class="tag dist">📍 距特卡波约30min</span>
-        <span class="tag free">✅ 免费取消</span>
+        <span class="tag free">取消截止 12月10日</span>
         <span class="tag elder">👴 乡村平房易行</span>
         <span class="tag kid">👶 开阔户外空间</span>
       </div>
@@ -398,7 +403,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
           <li>远离特卡波餐厅</li>
         </ul></div>
       </div>
-      <button class="sel-btn" onclick="event.stopPropagation();pick('tko',2,this.parentElement)">选择此方案</button>
+      <button class="sel-btn" style="background:#15803d;color:#fff;border-color:#15803d;cursor:default" disabled>🔒 已预订</button>
     </div>
 
     <div class="card" data-loc="tko" data-opt="3" onclick="pick('tko',3,this)">
@@ -591,15 +596,16 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
       <button class="sel-btn" onclick="event.stopPropagation();pick('wka',2,this.parentElement)">选择此方案</button>
     </div>
 
-    <div class="card" data-loc="wka" data-opt="3" onclick="pick('wka',3,this)">
+    <div class="card booked" data-loc="wka" data-opt="3" onclick="pick('wka',3,this)">
+      <span class="booked-badge">🔒 已预订</span>
       <span class="card-source airbnb">🏠 Airbnb</span>
       <div class="card-name">Magic on McLeod</div>
       <a class="card-link" href="https://www.airbnb.com/s/Wanaka--New-Zealand/homes?checkin=2026-12-24&checkout=2026-12-26&adults=8&min_bedrooms=3" target="_blank" onclick="event.stopPropagation()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Airbnb 查看</a>
       <div class="tags">
-        <span class="tag price">MYR 4,346（2晚）</span>
+        <span class="tag confirmed">✅ 已付 MYR 4,346（2晚）</span>
         <span class="tag rating">⭐ 5.0 · 11条</span>
         <span class="tag dist">📍 瓦纳卡镇内</span>
-        <span class="tag free">✅ 免费取消</span>
+        <span class="tag free">取消截止 12月21日 15:00</span>
         <span class="tag elder">👴 需确认楼层</span>
         <span class="tag kid">👶 镇内步行安全</span>
       </div>
@@ -615,7 +621,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
           <li>评价数少（11条）</li>
         </ul></div>
       </div>
-      <button class="sel-btn" onclick="event.stopPropagation();pick('wka',3,this.parentElement)">选择此方案</button>
+      <button class="sel-btn" style="background:#15803d;color:#fff;border-color:#15803d;cursor:default" disabled>🔒 已预订</button>
     </div>
 
   </div>
