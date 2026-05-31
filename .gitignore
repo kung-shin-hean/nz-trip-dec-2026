@@ -1,0 +1,8 @@
+# Ignore everything by default — this folder is a workspace, only publish-relevant files belong in git
+*
+
+# Allowlist the files that should be published to GitHub Pages
+!.gitignore
+!index.html
+!nz_accommodation_v3.html
+!nz_itinerary_planner_zh.html
