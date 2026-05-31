@@ -745,8 +745,9 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 
 <script>
 const sel={chc:null,tko:null,mtc:null,wka:null,qtn:null};
-// Track the actual selected card DOM element per location (no querySelectorAll needed)
 const selCard={chc:null,tko:null,mtc:null,wka:null,qtn:null};
+// Confirmed bookings — cannot be overridden by user selection
+const bookedSel={tko:2,wka:3};
 
 const labels={
   chc:{1:'MYR 972 (Airbnb)',2:'MYR 1,448 (Airbnb)',3:'MYR 2,265 (Airbnb)'},
@@ -790,6 +791,7 @@ function applyPick(loc,opt,card){
 }
 
 function pick(loc,opt,card){
+  if(loc in bookedSel) return; // confirmed booking — locked
   applyPick(loc,opt,card);
   try { localStorage.setItem('nz_accom_v3_sel', JSON.stringify(sel)); } catch(e) {}
 }
@@ -800,16 +802,23 @@ document.querySelectorAll('.card').forEach(function(c){
   c.style.cursor='default';
 });
 
-// Restore previously persisted selections (survives iOS Safari memory eviction / pull-to-refresh)
+// Restore previously persisted selections (skip booked locations — those are applied below)
 try {
   const saved = JSON.parse(localStorage.getItem('nz_accom_v3_sel') || '{}');
   Object.keys(saved).forEach(loc => {
+    if (loc in bookedSel) return; // booked — will be applied below
     const opt = saved[loc];
     if (opt == null) return;
     const card = document.querySelector('.card[data-loc="'+loc+'"][data-opt="'+opt+'"]');
     if (card) applyPick(loc, opt, card);
   });
 } catch (e) { /* corrupt storage — ignore */ }
+
+// Always auto-select confirmed bookings (included in total from page load)
+Object.entries(bookedSel).forEach(([loc, opt]) => {
+  const card = document.querySelector('.card[data-loc="'+loc+'"][data-opt="'+opt+'"]');
+  if (card) applyPick(loc, opt, card);
+});
 
 function updateTotal(){
   let total=0,allSet=true,hasUnknown=false;
