@@ -727,9 +727,6 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 
 </div><!-- end content -->
 
-<!-- DEBUG PANEL — remove once iOS bug diagnosed. Always visible top-right. -->
-<div id="dbg-panel" style="position:fixed;top:6px;right:6px;background:rgba(0,0,0,0.82);color:#0f0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;padding:6px 8px;border-radius:6px;max-width:60vw;z-index:9999;line-height:1.35;pointer-events:none;white-space:pre-wrap;word-break:break-all;">DBG init…</div>
-
 <script>
 const sel={chc:null,tko:null,mtc:null,wka:null,qtn:null};
 // Track the actual selected card DOM element per location (no querySelectorAll needed)
@@ -779,30 +776,6 @@ function applyPick(loc,opt,card){
 function pick(loc,opt,card){
   applyPick(loc,opt,card);
   try { localStorage.setItem('nz_accom_v3_sel', JSON.stringify(sel)); } catch(e) {}
-  dbgLastAction = loc+':'+opt+' @'+new Date().toLocaleTimeString();
-  dbgRender();
-}
-
-// === DEBUG INSTRUMENTATION (temporary — diagnoses iOS state-loss bug) ===
-let dbgLoadCount = 1;
-try {
-  dbgLoadCount = (parseInt(sessionStorage.getItem('nz_accom_v3_loads')||'0',10)+1);
-  sessionStorage.setItem('nz_accom_v3_loads', String(dbgLoadCount));
-} catch(e) {}
-const dbgLoadTime = new Date().toLocaleTimeString();
-let dbgLastAction = '(none yet)';
-function dbgRender(){
-  const el = document.getElementById('dbg-panel');
-  if(!el) return;
-  let ls = '(unavailable)';
-  try { ls = localStorage.getItem('nz_accom_v3_sel') || '(empty)'; } catch(e) { ls = 'ERR:'+e.message; }
-  let ss = '?';
-  try { ss = sessionStorage.getItem('nz_accom_v3_loads') || '?'; } catch(e) {}
-  el.textContent =
-    'loads:'+dbgLoadCount+' (ss:'+ss+') @'+dbgLoadTime+'\n'+
-    'sel:'+JSON.stringify(sel)+'\n'+
-    'ls:'+ls+'\n'+
-    'last:'+dbgLastAction;
 }
 
 // Disable whole-card tap on touch devices — only the button should trigger selection
@@ -821,8 +794,6 @@ try {
     if (card) applyPick(loc, opt, card);
   });
 } catch (e) { /* corrupt storage — ignore */ }
-
-dbgRender();
 
 function updateTotal(){
   let total=0,allSet=true,hasUnknown=false;
