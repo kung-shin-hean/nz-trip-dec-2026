@@ -14,11 +14,13 @@ Files:
 `nz_itinerary_planner_zh.html` holds each day twice:
 
 1. `.day-card` blocks (~line 300–800) — what the page renders
-2. the `dayData` array inside `<script>` (~line 1050+) — what the export/share feature emits
+2. the `const days` array inside `buildPrintItinerary()` (~line 1035+) — what the
+   print/share modal emits
 
 Changing a day means changing both. The array has silently drifted before: commit
 `4e42f76` moved Day 4 to Wanaka in the day cards but left the array saying Queenstown,
-and it went unnoticed for two commits.
+and it went unnoticed for two commits. Nothing detects this — the page renders fine and
+only the printed copy is wrong.
 
 ## Booking a location touches 4 places
 

@@ -8,6 +8,7 @@
 !nz_itinerary_planner_zh.html
 
 # Project tooling (not published, but tracked so it survives across machines)
+!README.md
 !CLAUDE.md
 !check.py
 !.claude/
