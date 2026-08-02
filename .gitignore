@@ -6,3 +6,9 @@
 !index.html
 !nz_accommodation_v3.html
 !nz_itinerary_planner_zh.html
+
+# Project tooling (not published, but tracked so it survives across machines)
+!CLAUDE.md
+!check.py
+!.claude/
+!.claude/**
