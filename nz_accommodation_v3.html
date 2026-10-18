@@ -214,18 +214,6 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
   </div>
 </div>
 
-<!-- SAVINGS BANNER -->
-<div class="savings-banner">
-  <div class="savings-inner">
-    <span class="savings-title">💰 预算对比（全程）</span>
-    <div class="savings-compare">
-      <div class="sc-box old"><div class="sc-label">Motor Lodge方案（已淘汰）</div><div class="sc-val">MYR ~39,000</div></div>
-      <div class="sc-box new"><div class="sc-label">🏠 Holiday Home目标</div><div class="sc-val">MYR &lt;20,000</div></div>
-      <div class="sc-box save"><div class="sc-label">🎉 预计可省下</div><div class="sc-val">MYR ~19,000+</div></div>
-    </div>
-  </div>
-</div>
-
 <div class="sticky-nav">
   <div class="nav-inner" id="nav">
     <span class="nav-pill" id="np-akl1">奥克兰①</span>
@@ -1171,10 +1159,9 @@ function updateTotal(){
   });
   if(allSet){
     const note=missing.length?' (未含'+missing.join('+')+'实付金额)':'';
-    const overBudget=total>20000;
-    document.getElementById('bv-total').textContent='MYR ~'+total.toLocaleString()+note+(overBudget?' ⚠️ 超出RM20K目标':'  ✅ 达标！');
+    document.getElementById('bv-total').textContent='MYR ~'+total.toLocaleString()+note;
     document.getElementById('bv-pax').textContent='MYR ~'+Math.round(total/8).toLocaleString()+'/人'+note;
-    document.getElementById('bv-total').style.color=overBudget?'#dc2626':'#059669';
+    document.getElementById('bv-total').style.color='#059669';
     document.getElementById('bv-pax').style.color='#2563eb';
   }
 }
