@@ -7,6 +7,11 @@
 <style>
   *{box-sizing:border-box;}
   body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;max-width:560px;margin:0 auto;padding:36px 18px 60px;color:#111827;background:#f9fafb;}
+  table.ledger{width:100%;border-collapse:collapse;font-size:0.72rem;}
+  table.ledger th,table.ledger td{border-bottom:1px solid #e5e7eb;padding:5px 4px;text-align:left;vertical-align:top;}
+  table.ledger th{background:#f9fafb;color:#374151;white-space:nowrap;}
+  table.ledger td.rm{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .ledger-sum{font-size:0.76rem;line-height:1.6;margin-top:10px;color:#374151;}
   h1{font-size:1.3rem;margin:0 0 6px;}
   .sub-h{color:#6b7280;font-size:0.82rem;margin:0 0 24px;}
   a.link-card{display:block;padding:16px 18px;margin:10px 0;background:#fff;border:1px solid #e5e7eb;border-radius:10px;text-decoration:none;color:#065f46;font-weight:600;transition:all .15s;}
@@ -19,6 +24,10 @@
 <body>
   <h1>🇳🇿 NZ Dec 2026 — 行程链接</h1>
   <p class="sub-h">8人家庭团 · 基督城 → 皇后镇</p>
+  <a href="#budget-estimate" style="display:block;margin:12px 0;padding:12px 14px;background:#fef3c7;border:1px solid #f59e0b;border-radius:10px;text-decoration:none;color:#78350f;">
+    <div style="font-size:0.9rem;font-weight:700;">💵 每人要准备多少钱？约 RM 14,400 – 16,600（建议准备 RM 17,000）</div>
+    <div style="font-size:0.76rem;margin-top:4px;line-height:1.5;">≈RM 6,600 = 住宿+租车，已由别人垫付，之后还给垫付人 · ≈RM 4,000 机票已购 · 其余约 RM 3,800 – 6,000（吃饭、油费、门票、入境费/保险）为估算 → 点这里看明细</div>
+  </a>
 
   <a class="link-card" href="nz_itinerary_planner_zh.html">
     <div class="lc-title">📅 主行程规划</div>
@@ -26,27 +35,81 @@
   </a>
 
   <a class="link-card" href="nz_accommodation_v3.html">
-    <div class="lc-title">🏠 住宿选择 V7 <span style="background:#d1fae5;color:#065f46;font-size:0.62rem;padding:1px 7px;border-radius:6px;margin-left:5px;vertical-align:middle;">8处已订 · 1/3晚未订</span></div>
-    <div class="lc-sub">🔒 12/18–21 奥克兰 · 12/21 基督城 · 12/22 特卡波 · 12/23 特威泽尔 · 12/24–26 瓦纳卡 · 12/26–31 皇后镇 · 12/31–1/1 奥克兰 · 1/1–3 罗托鲁瓦（Tokoroa）</div>
-    <div class="lc-sub">🟠 待办：补基督城+皇后镇+奥克兰实付金额 · ⚠️ 1月3日晚住宿未订 · 平安夜订位</div>
+    <div class="lc-title">🏠 住宿选择 V7 <span style="background:#d1fae5;color:#065f46;font-size:0.62rem;padding:1px 7px;border-radius:6px;margin-left:5px;vertical-align:middle;">9处已订 · 住宿全部订好</span></div>
+    <div class="lc-sub">🔒 12/18–21 奥克兰 · 12/21 基督城 · 12/22 特卡波 · 12/23 特威泽尔 · 12/24–26 瓦纳卡 · 12/26–31 皇后镇 · 12/31–1/1 奥克兰 · 1/1–3 罗托鲁瓦（Tokoroa）· 1/3 奥克兰机场 Jetpark</div>
+    <div class="lc-sub">🟠 待办：团体车取还车地点 · 奥克兰两处房源名称 · 平安夜订位</div>
   </a>
+
+  <!-- ═══════════ 💰 垫付记录 ═══════════ -->
+  <div id="ledger" style="margin-top:20px;padding:14px 16px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;">
+    <div style="font-size:0.85rem;font-weight:700;margin-bottom:8px;">💰 谁付了什么（垫付记录）</div>
+    <div style="overflow-x:auto;">
+    <table class="ledger">
+      <thead><tr><th>项目</th><th>日期</th><th>原币金额</th><th>马币 RM</th><th>垫付人</th><th>来源</th></tr></thead>
+      <tbody>
+      <!-- 新增一行：复制下面任意一行 <tr>…</tr>，改6个格子，然后更新下方小计 -->
+      <tr><td>🏨 基督城 1晚</td><td>12/21</td><td>NZD 647.45</td><td class="rm">1,532.00</td><td>Kung Shin Zhou</td><td>10月18日 Ahreezia 手写单据</td></tr>
+      <tr><td>🏨 特威泽尔 Twizel 1晚</td><td>12/23</td><td>NZD 670.45</td><td class="rm">1,586.00</td><td>Kung Shin Zhou</td><td>10月18日 Ahreezia 手写单据</td></tr>
+      <tr><td>🏨 皇后镇 5晚</td><td>12/26–31</td><td>NZD 7,963.75</td><td class="rm">18,840.00</td><td>Kung Shin Zhou</td><td>10月18日 Ahreezia 手写单据（NZD 按手写单据，首位数字略不清）</td></tr>
+      <tr><td>🚗 团体用车 2台 Toyota RAV4</td><td>12/21–31</td><td>CNY 19,358</td><td class="rm">11,636.00</td><td>Kung Shin Zhou</td><td>10月18日 Ahreezia 手写单据</td></tr>
+      <tr><td>🚗 租车 A Toyota Highlander</td><td>12/18–21</td><td>NZD 753.23</td><td class="rm">1,770.00</td><td>Kung Shin Zhou</td><td>10月18日 Ahreezia 手写单据（RM 按 CNY 金额校正）</td></tr>
+      <tr><td>🚗 租车 B Nissan X-Trail</td><td>12/31–1/4</td><td>NZD 1,030.75</td><td class="rm">2,422.00</td><td>Kung Shin Zhou</td><td>10月18日 Ahreezia 手写单据（RM 按 CNY 金额校正）</td></tr>
+      <tr><td>🏨 罗托鲁瓦 Tokoroa 2晚</td><td>1/1–3</td><td>NZD 1,150</td><td class="rm">≈2,933（估算，按2.55）</td><td>Kung Shin Zhou</td><td>10月18日 13:33 Kung Shin Zhou 群内确认（12/23 扣款；不在手写单据上）</td></tr>
+      <tr><td>🏨 特卡波 Ashwick Flat 1晚</td><td>12/22</td><td>—</td><td class="rm">2,314.93</td><td>Kung Shin Hean</td><td>10月18日 Ahreezia 手写单据（原写 2,033 已划掉）</td></tr>
+      <tr><td>🏨 瓦纳卡 Magic on McLeod 2晚</td><td>12/24–26</td><td>—</td><td class="rm">4,346.00</td><td>Kung Shin Hean</td><td>10月18日 Ahreezia 手写单据</td></tr>
+      <tr><td>🏨 奥克兰① 3晚</td><td>12/18–21</td><td>—</td><td class="rm">3,284.68</td><td>Ahreezia</td><td>10月18日 Ahreezia 手写单据</td></tr>
+      <tr><td>🏨 奥克兰② 1晚</td><td>12/31–1/1</td><td>—</td><td class="rm">1,121.79</td><td>Ahreezia</td><td>10月18日 Ahreezia 手写单据</td></tr>
+      <tr><td>🏨 Jetpark Hotel（奥克兰机场附近）1晚</td><td>1/3–1/4</td><td>NZD 421.21</td><td class="rm">989.00</td><td>Ahreezia</td><td>10月18日 Ahreezia 手写单据</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="ledger-sum">
+      <div><strong>Kung Shin Zhou</strong>：RM 37,786.00（单据）+ 罗托鲁瓦 ≈RM 2,933（估算）= <strong>≈RM 40,719.00</strong></div>
+      <div><strong>Kung Shin Hean</strong>：<strong>RM 6,660.93</strong></div>
+      <div><strong>Ahreezia</strong>：<strong>RM 5,395.47</strong></div>
+      <div style="border-top:1px solid #e5e7eb;margin-top:4px;padding-top:4px;"><strong>总计</strong>：RM 49,842.40（单据）+ ≈RM 2,933（估算）= <strong>≈RM 52,775.40</strong></div>
+    </div>
+    <div style="font-size:0.74rem;color:#b45309;margin-top:8px;">分摊方式待定，之后再算谁还谁。</div>
+    <div style="font-size:0.7rem;color:#6b7280;margin-top:4px;line-height:1.5;">「Joy」= Kung Shin Zhou，「Hean」= Kung Shin Hean，「Me」= Ahreezia。RM 为实际马币付款额；原币金额保留以便对单。<br>如何新增：在 index.html 表格里复制一行 &lt;tr&gt;，按「项目 | 日期 | 原币金额 | 马币 RM | 垫付人 | 来源」填写，来源写明谁在哪天发的（如「10月18日 Ahreezia 手写单据」），再手动更新该垫付人小计和总计。</div>
+  </div>
+
+  <!-- ═══════════ 🐷 预估总花费 ═══════════ -->
+  <div id="budget-estimate" style="margin-top:20px;padding:14px 16px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;">
+    <div style="font-size:0.85rem;font-weight:700;margin-bottom:8px;">🐷 预估总花费（每人该存多少）</div>
+    <div style="overflow-x:auto;">
+    <table class="ledger">
+      <thead><tr><th>项目</th><th>每人 RM（约）</th><th>依据</th></tr></thead>
+      <tbody>
+      <tr><td>🏨🚗 已订住宿 + 租车</td><td class="rm">≈6,600</td><td>上方垫付总计 ≈RM 52,775 ÷ 8人（平均，实际分摊待定）</td></tr>
+      <tr><td>✈️ 机票（已购）</td><td class="rm">≈4,000</td><td>已购，约 RM 4,000/人（10月18日 Kung Shin Hean 确认）</td></tr>
+      <tr><td>🍜 吃饭（约17天）</td><td class="rm">2,600 – 3,500</td><td>估算：每人每天约 NZD 60–80</td></tr>
+      <tr><td>⛽ 油费 + 停车</td><td class="rm">250 – 400</td><td>估算：2台车南岛自驾 + 北岛段，平摊</td></tr>
+      <tr><td>🎟️ 门票 / 活动</td><td class="rm">500 – 1,500</td><td>估算：视参加项目而定</td></tr>
+      <tr><td>🛂 NZeTA + IVL 入境费、旅游保险</td><td class="rm">450 – 600</td><td>估算：NZeTA+IVL 约 NZD 117（≈RM 300）+ 保险</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="ledger-sum">
+      <div style="border-top:1px solid #e5e7eb;margin-top:4px;padding-top:4px;"><strong>每人合计</strong>：约 <strong>RM 14,400 – 16,600</strong>（含已购机票）· 建议每人准备 <strong>RM 17,000</strong>（另备购物零用钱）</div>
+    </div>
+    <div style="font-size:0.74rem;color:#b45309;margin-top:8px;">⚠️ 只有「已订住宿 + 租车」和机票是实际付款；吃饭、油费、门票、入境费/保险是粗略估算。小孩/提早离团的成员费用会不同。</div>
+  </div>
 
   <div style="margin-top:20px;padding:14px 16px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;">
     <div style="font-size:0.85rem;font-weight:700;margin-bottom:8px;">📋 进度速览（更新至 2026年10月18日）</div>
     <div style="font-size:0.76rem;line-height:1.6;color:#374151;">
       ✅ <strong>原5处住宿已预订</strong> — Shin Zhou 全部搞定<br>
-      ✅ 奥克兰住宿 12/18–21（3晚）已订 — 名称/金额待补 · 10月18日 Kung Shin Hean 提供的预订截图确认<br>
-      ✅ 奥克兰住宿 12/31–1/1（1晚）已订 — 名称/金额待补 · 10月18日 Kung Shin Hean 提供的预订截图确认<br>
+      ✅ 奥克兰住宿 12/18–21（3晚）已订 — RM 3,284.68（Ahreezia 垫付）· 名称待补 · 10月18日 Kung Shin Hean 提供的预订截图确认<br>
+      ✅ 奥克兰住宿 12/31–1/1（1晚）已订 — RM 1,121.79（Ahreezia 垫付）· 名称待补 · 10月18日 Kung Shin Hean 提供的预订截图确认<br>
+      ✅ 1/3–1/4 Jetpark Hotel（奥克兰机场附近）已订 — 1晚 · NZD 421.21（RM 989）· Ahreezia 预订垫付 · 10月18日 Ahreezia 手写单据<br>
       ✅ 库克山村全满 → 改为「特威泽尔过夜 + 库克山当日游」（12/23）<br>
       ✅ 罗托鲁瓦（Tokoroa）1/1–3 已订 — 2晚 · 8人 · NZD 1,150（≈MYR 2,933）· 10月18日 Kung Shin Zhou 群内确认下单 <span style="color:#6b7280">（10月18日 13:33 群内确认已订）</span><br>
       ✅ 特卡波 Lake Ophua 无法加订 12/23（房东回复已满）<br>
-      ✅ 租车 A 已订 — Ezi 汉兰达 7座 · 12/18–21 · NZD 753.23（≈MYR 1,921）· 10月16日群内确认 · Kung Shin Zhou 与朋友自用，取还车由她们安排（10月18日 Kung Shin Hean 确认）<br>
-      ✅ 租车 B 已订 — Dollar 奇骏 5座 · 奥克兰机场 · 12/31–1/4 · NZD 1,030.75（≈MYR 2,628）· 10月18日群内确认<br>
-      ✅ 团体用车 ×2 已订 — 南岛段 12/21–31 · 8人分乘2车 · 10月18日 Kung Shin Hean 与策划确认（详情未在群内发布）<br>
-      🟠 基督城 + 皇后镇 + 两段奥克兰住宿的实付金额待补<br>
-      🟠 团体2辆车：补车型、取还车地点、金额<br>
-
-      ⚠️ 1月3日晚住宿未订<br>
+      ✅ 租车 A 已订 — Ezi 汉兰达 7座 · 12/18–21 · NZD 753.23（≈RM 1,770）· 10月16日群内确认 · Kung Shin Zhou 与朋友自用，取还车由她们安排（10月18日 Kung Shin Hean 确认）<br>
+      ✅ 租车 B 已订 — Dollar 奇骏 5座 · 奥克兰机场 · 12/31–1/4 · NZD 1,030.75（≈RM 2,422）· 10月18日群内确认<br>
+      ✅ 团体用车 2台 Toyota RAV4 已订 — 南岛段 12/21–31 · 8人分乘2车 · CNY 19,358（RM 11,636）· 10月18日 Ahreezia 手写单据<br>
+      ✅ 所有住宿实付金额已补（10月18日 Ahreezia 手写单据）— 见上方垫付记录<br>
+      🟠 团体2台 RAV4：取还车地点待确认<br>
       🟠 平安夜（12/24 瓦纳卡）晚餐还没订位
     </div>
   </div>
