@@ -237,8 +237,16 @@
   .btn-print { background: #0f4c81; color: white; border: none; border-radius: 8px; padding: 10px 24px; cursor: pointer; font-weight: 600; }
   .btn-close-modal { background: var(--border); color: var(--text); border: none; border-radius: 8px; padding: 10px 24px; cursor: pointer; font-weight: 600; }
 
+  .where-box { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; }
+  .where-box h3 { font-size: 1rem; margin-bottom: 8px; }
+  .where-box label { font-size: 0.85rem; margin-right: 10px; }
+  .where-box input { padding: 4px 6px; border: 1px solid var(--border); border-radius: 6px; margin-left: 4px; }
+  .where-result { margin-top: 10px; font-size: 0.9rem; line-height: 1.7; }
+  .friend-line { font-size: 0.85rem; color: var(--subtext); margin: 4px 0 10px; }
+  .where-share { display: inline-block; margin-top: 8px; background: #25d366; color: #fff; border-radius: 8px; padding: 8px 16px; font-weight: 600; text-decoration: none; }
+
   @media print {
-    .progress-bar-wrap, .finalize-section, .hero { display: none; }
+    .progress-bar-wrap, .finalize-section, .hero, .where-box { display: none; }
     .day-body { display: block !important; }
     .print-modal { display: none !important; }
   }
@@ -269,12 +277,11 @@
 <div class="progress-bar-wrap">
   <div class="progress-label">
     <span>决策完成进度</span>
-    <span id="progress-count">0 / 3</span>
+    <span id="progress-count">0 / 2</span>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   <div class="decisions-status">
     <span class="decision-pill" id="pill-hobbiton" onclick="scrollTo('decision-hobbiton')">🎬 霍比特人村</span>
-    <span class="decision-pill" id="pill-milford" onclick="scrollTo('decision-milford')">🚢 米尔福德峡湾时间</span>
     <span class="decision-pill" id="pill-wanaka" onclick="scrollTo('decision-wanaka')">🚗 瓦纳卡路线</span>
     <span class="decision-pill done" id="pill-postgroup">✅ 散伙后：奥克兰（已确认）</span>
   </div>
@@ -286,6 +293,15 @@
   <!-- 最新群组更新 -->
   <div class="info-row" style="margin-bottom: 16px;">
     <span class="info-pill green">🆕 阿罗镇 (Arrowtown) + 克伦威尔 (Cromwell) — 确认必去，具体哪一天还在讨论 (2026-06-01 NZ Dec Trip 群更新)</span>
+  </div>
+
+  <!-- 📍 我们在哪？ -->
+  <div class="where-box" id="where-box">
+    <h3>📍 我们在哪？</h3>
+    <label>日期<input type="date" id="where-date" min="2026-12-18" max="2027-01-04" oninput="renderWhereBox()"></label>
+    <label>时间<input type="time" id="where-time" oninput="renderWhereBox()"></label>
+    <div class="where-result" id="where-result">选择日期和时间，查看我们当时所在的位置。</div>
+    <a class="where-share" id="where-share" target="_blank" rel="noopener" style="display:none">💬 通过 WhatsApp 发给朋友</a>
   </div>
 
   <!-- ══════════════════════════════════
@@ -304,6 +320,10 @@
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
+      <ul class="timeline">
+        <li class="meetup"><span class="time">待确认</span><span class="act"><strong>📍 租车 A 取车 — 地点待确认</strong></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-18"></div>
       <ul class="timeline">
         <li><span class="time">12月18日</span><span class="act"><strong>租车 A 取车（Kung Shin Zhou 与朋友自用，取还车由她们安排（10月18日 Kung Shin Hean 确认））</strong><span class="note">Ezi · 订单号 1009590245 · 3天（12月18日–21日）· 超级安心全险套餐。取车时信用卡预授权押金约 NZD 400，还车后约30天释放。</span></span></li>
       </ul>
@@ -326,6 +346,10 @@
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
+      <ul class="timeline">
+        <li class="meetup"><span class="time">约6:45</span><span class="act"><strong>📍 抵达：奥克兰国际机场 Auckland Airport（CX195）</strong> <a href="https://www.google.com/maps/search/?api=1&query=Auckland%20Airport" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-19"></div>
       <ul class="timeline">
         <li><span class="time">约6:45</span><span class="act"><strong>抵达奥克兰国际机场</strong><span class="note">国泰航空CX195（香港出发）。提取行李，办理入境手续。</span></span></li>
         <li><span class="time">约8:30</span><span class="act"><strong>办理入住奥克兰住宿（已订）</strong><span class="note">奥克兰住宿（名称待补）已订 · 12月18日–21日（3晚）· 6位住客 · RM 3,284.68（Ahreezia 垫付） · 10月18日 Kung Shin Hean 提供的预订截图确认。</span></span></li>
@@ -351,10 +375,14 @@
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
+      <ul class="timeline">
+        <li class="meetup"><span class="time">上午</span><span class="act"><strong>📍 建议：从奥克兰住宿出发 — 地点待确认（住宿名称待补）</strong></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-20"></div>
 
       <!-- 决策1：霍比特人村 -->
       <div class="decision-block" id="decision-hobbiton">
-        <div class="decision-title">🟡 第1项决策（共3项）— 要去霍比特人村吗？</div>
+        <div class="decision-title">🟡 第1项决策（共2项）— 要去霍比特人村吗？</div>
         <p style="font-size:0.85rem; margin-bottom:10px; color:#92400e;">霍比特人村（夏尔）位于马塔马塔，距奥克兰约2小时车程。这个空闲日要不要去？全程需要一整天（开车+2小时参观）。这是群里WhatsApp投票的第一名（5票）！</p>
         <div class="decision-options">
           <button class="option-btn" onclick="event.stopPropagation(); decide('hobbiton','yes', this)">
@@ -418,6 +446,11 @@
     </div>
     <div class="day-body">
       <ul class="timeline">
+        <li class="meetup"><span class="time">待确认</span><span class="act"><strong>📍 取车 2台 RAV4 — 地点待确认</strong></span></li>
+        <li class="meetup"><span class="time">13:05</span><span class="act"><strong>📍 全体汇合：基督城机场 CHC 到达厅</strong> <a href="https://www.google.com/maps/search/?api=1&query=Christchurch%20Airport" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-21"></div>
+      <ul class="timeline">
         <li><span class="time">11:40</span><span class="act"><strong>从奥克兰出发（AKL）</strong><span class="note">搭乘JQ231航班，全体8人同机出发。</span></span></li>
         <li><span class="time">13:05</span><span class="act"><strong>抵达基督城（CHC）</strong><span class="note">提取行李。租车 A（Ezi 汉兰达）今天还车 — Kung Shin Zhou 与朋友自用，取还车由她们安排（10月18日 Kung Shin Hean 确认）。</span></span></li>
         <li><span class="time">待确认</span><span class="act"><strong>🚗 全体提取团体用车 2台 RAV4（8人分乘2辆车）</strong><span class="note">取车地点/时间待确认 · 2台 Toyota RAV4 · CNY 19,358（RM 11,636）（10月18日 Kung Shin Hean 与策划确认；车型/金额按10月18日 14:12 Ahreezia 手写付款单（WhatsApp 群））。</span></span></li>
@@ -445,6 +478,10 @@
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
+      <ul class="timeline">
+        <li class="meetup"><span class="time">8:30</span><span class="act"><strong>📍 建议：从 A Great Location 4 bedrooms（住处）出发</strong> <a href="https://www.google.com/maps/search/?api=1&query=A%20Great%20Location%204%20bedrooms%2C%20Christchurch" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-22"></div>
       <ul class="timeline">
         <li><span class="time">8:30</span><span class="act"><strong>早餐后从基督城出发</strong><span class="note">沿SH1南下，再转SH8。</span></span></li>
         <li><span class="time">10:00</span><span class="act"><strong>途经杰拉尔丁小镇</strong><span class="note">迷人的小镇，有很棒的面包店可以享用上午茶 ☕</span></span></li>
@@ -476,6 +513,10 @@
     </div>
     <div class="day-body">
       <ul class="timeline">
+        <li class="meetup"><span class="time">8:00</span><span class="act"><strong>📍 建议：从 Lake Ophua House（住处）出发</strong> <a href="https://www.google.com/maps/search/?api=1&query=Lake%20Ophua%20House%2C%20Lake%20Opuha" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-23"></div>
+      <ul class="timeline">
         <li><span class="time">8:00</span><span class="act"><strong>早餐后退房，离开特卡波</strong><span class="note">须 10:00 前退房（Ashwick Flat · 房东 Mark）。Lake Ophua 无法加订 12/23（房东回复已满），今晚改住特威泽尔。</span></span></li>
         <li><span class="time">9:00</span><span class="act"><strong>📸 普卡基湖打卡停留</strong><span class="note">奶蓝色湖水配库克山背景，停留约30分钟。</span></span></li>
         <li><span class="time">10:30</span><span class="act"><strong>抵达库克山村（阿奥拉基）</strong><span class="note">特卡波→库克山约1小时20分。</span></span></li>
@@ -504,6 +545,10 @@
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
+      <ul class="timeline">
+        <li class="meetup"><span class="time">9:00</span><span class="act"><strong>📍 建议：从 Beaut Views From Glencairn（住处）出发</strong> <a href="https://www.google.com/maps/search/?api=1&query=Beaut%20Views%20From%20Glencairn%2C%20Twizel" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-24"></div>
       <ul class="timeline">
         <li><span class="time">9:00</span><span class="act"><strong>从特威泽尔出发</strong><span class="note">住在特威泽尔的好处 — 今天不必开3.5小时。</span></span></li>
         <li><span class="time">9:15</span><span class="act"><strong>可选：特威泽尔三文鱼农场 🐟</strong><span class="note">小孩子超爱喂鱼！停留约15分钟。</span></span></li>
@@ -534,6 +579,10 @@
     </div>
     <div class="day-body">
       <ul class="timeline">
+        <li class="meetup"><span class="time">10:30</span><span class="act"><strong>📍 建议：从 Magic on McLeod（住处）出发</strong> <a href="https://www.google.com/maps/search/?api=1&query=Magic%20on%20McLeod%2C%20Wanaka" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-25"></div>
+      <ul class="timeline">
         <li><span class="time">上午</span><span class="act"><strong>全体慵懒吃早餐 😴</strong><span class="note">圣诞节，不用赶！住处有完整厨房，在家做顿丰盛早餐。</span></span></li>
         <li><span class="time">10:30</span><span class="act"><strong>谜幻世界（Puzzling World）</strong><span class="note">3D错觉房间、视觉错觉画廊、大型迷宫。江愷恒一定超爱！老少咸宜，约1.5小时。</span></span></li>
         <li><span class="time">12:30</span><span class="act"><strong>圣诞午餐</strong><span class="note">瓦纳卡镇内用餐。</span></span></li>
@@ -560,6 +609,10 @@
     </div>
     <div class="day-body">
       <ul class="timeline">
+        <li class="meetup"><span class="time">10:00</span><span class="act"><strong>📍 建议：从 Magic on McLeod（住处）退房出发</strong> <a href="https://www.google.com/maps/search/?api=1&query=Magic%20on%20McLeod%2C%20Wanaka" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-26"></div>
+      <ul class="timeline">
         <li><span class="time">上午</span><span class="act"><strong>瓦纳卡湖边晨走（最后一眼）</strong></span></li>
         <li><span class="time">10:00</span><span class="act"><strong>退房出发前往皇后镇</strong></span></li>
         <li><span class="time">11:00–12:00</span><span class="act"><strong>抵达皇后镇 — 办理入住</strong><span class="note">Peaceful inviting home with lake &amp; mountain views（已预订，住5晚）</span></span></li>
@@ -571,7 +624,7 @@
 
       <!-- 决策2：瓦纳卡路线 -->
       <div class="decision-block" id="decision-wanaka">
-        <div class="decision-title">🟡 第2项决策（共3项）— 走哪条路去皇后镇？</div>
+        <div class="decision-title">🟡 第2项决策（共2项）— 走哪条路去皇后镇？</div>
         <p style="font-size:0.85rem; margin-bottom:10px; color:#92400e;">瓦纳卡到皇后镇有两条路，选哪条？</p>
         <div class="decision-options">
           <button class="option-btn" onclick="event.stopPropagation(); decide('wanaka','crown', this)">
@@ -609,69 +662,30 @@
     </div>
   </div>
 
-  <!-- 第7天 — 米尔福德峡湾决策 -->
+  <!-- 第7天 — 皇后镇休整日 -->
   <div class="day-card" id="day7">
     <div class="day-header" onclick="toggleDay(this)">
       <span class="day-badge">第7天</span>
       <div>
-        <div class="day-title">周日 12月27日 — 米尔福德峡湾 或 休整日 🏔️</div>
-        <div class="day-subtitle">重要决策！决定米尔福德峡湾与休整日的顺序</div>
+        <div class="day-title">周日 12月27日 — 皇后镇休整日 😴</div>
+        <div class="day-subtitle">睡懒觉 · 缆车 + 滑道车 · 自由下午</div>
       </div>
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
-
-      <!-- 决策3：米尔福德时间 -->
-      <div class="decision-block" id="decision-milford">
-        <div class="decision-title">🟡 第3项决策（共3项）— 米尔福德峡湾定在第7天还是第8天？</div>
-        <p style="font-size:0.85rem; margin-bottom:10px; color:#92400e;">米尔福德峡湾是全程最长的一天（约13小时）。安排在第7天（12月27日）还是第8天（12月28日）？第8天是抵达皇后镇后第二天，有更多时间缓冲。</p>
-        <div class="decision-options">
-          <button class="option-btn" onclick="event.stopPropagation(); decide('milford','day7', this)">
-            <span class="opt-label">📅 第7天去米尔福德（12月27日）</span>
-            <span class="opt-desc">按原计划。趁体力充沛先完成大日，第8天再休整。</span>
-          </button>
-          <button class="option-btn" onclick="event.stopPropagation(); decide('milford','day8', this)">
-            <span class="opt-label">📅 第8天去米尔福德（12月28日）</span>
-            <span class="opt-desc">先休整再出发。第6天刚抵达皇后镇，第7天先适应环境再出发更好。</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- 第7天内容：米尔福德 = 第7天 -->
-      <div class="variant-content" id="milford-day7">
-        <div style="font-weight:600; font-size:0.9rem; margin: 12px 0 6px; color:#0f4c81;">📅 第7天 = 米尔福德峡湾（超长大日 ⚠️）</div>
-        <ul class="timeline">
-          <li><span class="time">早上6:00</span><span class="act"><strong>⏰ 从皇后镇超早出发</strong><span class="note">前一晚备好零食、饮水、雨衣。</span></span></li>
-          <li><span class="time">8:00</span><span class="act"><strong>抵达蒂阿瑙（Te Anau）— 加油 + 早餐</strong><span class="note">这是前往米尔福德峡湾的最后一个加油站，千万不要跳过！</span></span></li>
-          <li><span class="time">9:30</span><span class="act"><strong>镜湖打卡停留</strong><span class="note">平坦小路，湖面倒影极美。约15分钟。</span></span></li>
-          <li><span class="time">10:00</span><span class="act"><strong>深渊（The Chasm）瀑布步道</strong><span class="note">约20分钟，步道平缓，气势磅礴。</span></span></li>
-          <li><span class="time">10:30</span><span class="act"><strong>抵达米尔福德峡湾</strong></span></li>
-          <li><span class="time">11:00</span><span class="act"><strong>🚢 米尔福德峡湾经典游船（1小时45分钟）</strong><span class="note">斯特林瀑布、神奇峰、海豹、海豚尽收眼底。southerndiscoveries.co.nz</span></span></li>
-          <li><span class="time">12:45</span><span class="act"><strong>在米尔福德峡湾码头咖啡馆用午餐</strong></span></li>
-          <li><span class="time">13:45</span><span class="act"><strong>开始驾车返回皇后镇</strong></span></li>
-          <li><span class="time">约18:00</span><span class="act"><strong>回到皇后镇</strong></span></li>
-          <li><span class="time">19:00</span><span class="act"><strong>晚餐 — 大家都辛苦了！🍽️</strong></span></li>
-        </ul>
-        <div class="info-row">
-          <span class="info-pill book">🔴 米尔福德游船需提前数月预订 — 12月极易售罄！</span>
-          <span class="info-pill warn">⛽ 务必在蒂阿瑙加满油 — 米尔福德峡湾没有加油站！</span>
-          <span class="info-pill">🌧️ 下雨天瀑布更壮观，不用担心天气！</span>
-        </div>
-      </div>
-
-      <!-- 第7天内容：米尔福德 = 第8天（此时第7天为休整日） -->
-      <div class="variant-content" id="milford-day8">
-        <div style="font-weight:600; font-size:0.9rem; margin: 12px 0 6px; color:#0f4c81;">📅 第7天 = 休整 / 自由活动日 😴</div>
-        <ul class="timeline">
-          <li><span class="time">上午</span><span class="act"><strong>睡懒觉！昨天从瓦纳卡搬到皇后镇，今天好好休息</strong></span></li>
-          <li><span class="time">上午稍晚</span><span class="act"><strong>皇后镇海滨 & 汽船码头</strong><span class="note">悠闲散步，咖啡馆休闲，周末市集。</span></span></li>
-          <li><span class="time">12:30</span><span class="act"><strong>缆车 + 滑道车（Luge）</strong><span class="note">长辈：乘缆车赏景。年轻人 + 江愷恒（有大人陪同）：坐滑道车 🛷</span></span></li>
-          <li><span class="time">15:00</span><span class="act"><strong>自由时间 — 购物、SPA、湖边漫步</strong></span></li>
-          <li><span class="time">18:30</span><span class="act"><strong>团体晚餐</strong></span></li>
-        </ul>
-        <div class="info-row">
-          <span class="info-pill">⚠️ 提醒：明天（第8天）才是米尔福德峡湾 — 早上6点出发！</span>
-        </div>
+      <ul class="timeline">
+        <li class="meetup"><span class="time">12:30</span><span class="act"><strong>📍 建议：从 Peaceful inviting home（住处）出发</strong> <a href="https://www.google.com/maps/search/?api=1&query=Peaceful%20inviting%20home%20with%20lake%20%26%20mountain%20views%2C%20Queenstown" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-27"></div>
+      <ul class="timeline">
+        <li><span class="time">上午</span><span class="act"><strong>睡懒觉！昨天从瓦纳卡搬到皇后镇，今天好好休息</strong></span></li>
+        <li><span class="time">上午稍晚</span><span class="act"><strong>皇后镇海滨 & 汽船码头</strong><span class="note">悠闲散步，咖啡馆休闲，周末市集。</span></span></li>
+        <li><span class="time">12:30</span><span class="act"><strong>缆车 + 滑道车（Luge）</strong><span class="note">长辈：乘缆车赏景。年轻人 + 江愷恒（有大人陪同）：坐滑道车 🛷</span></span></li>
+        <li><span class="time">15:00</span><span class="act"><strong>自由时间 — 购物、SPA、湖边漫步</strong></span></li>
+        <li><span class="time">18:30</span><span class="act"><strong>团体晚餐</strong></span></li>
+      </ul>
+      <div class="info-row">
+        <span class="info-pill">⚠️ 提醒：明天（第8天）米尔福德峡湾 — 6:30 在 Queenstown Visitor Centre 集合！</span>
       </div>
     </div>
   </div>
@@ -681,51 +695,22 @@
     <div class="day-header" onclick="toggleDay(this)">
       <span class="day-badge">第8天</span>
       <div>
-        <div class="day-title" id="day8-title">周一 12月28日 — 休整日 或 米尔福德峡湾 😴🏔️</div>
-        <div class="day-subtitle" id="day8-subtitle">取决于上方第7天的选择</div>
+        <div class="day-title">周一 12月28日 — 米尔福德峡湾（巴士+游船）🏔️</div>
+        <div class="day-subtitle">RealNZ Signature Cruise and Coach · 6:45 出发 · 约19:50 返回 · 已订</div>
       </div>
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
-      <!-- 第7天去了米尔福德 → 第8天休整 -->
-      <div class="variant-content" id="recovery-day7">
-        <div style="font-weight:600; font-size:0.9rem; margin: 0 0 6px; color:#0f4c81;">📅 第8天 = 休整 / 自由活动日 😴</div>
-        <ul class="timeline">
-          <li><span class="time">上午</span><span class="act"><strong>睡懒觉！米尔福德峡湾大日之后的应得休息</strong></span></li>
-          <li><span class="time">上午稍晚</span><span class="act"><strong>皇后镇海滨 & 汽船码头</strong><span class="note">悠闲散步，咖啡馆休闲。</span></span></li>
-          <li><span class="time">12:30</span><span class="act"><strong>缆车 + 滑道车（Luge）</strong><span class="note">长辈：乘缆车赏景。年轻人 + 江愷恒（有大人陪同）：坐滑道车 🛷</span></span></li>
-          <li><span class="time">15:00</span><span class="act"><strong>自由时间 — 购物、SPA、湖边漫步</strong></span></li>
-          <li><span class="time">18:30</span><span class="act"><strong>团体晚餐</strong></span></li>
-        </ul>
-        <div class="info-row"><span class="info-pill green">✅ 弹性备用日 — 若第7天米尔福德因天气取消，可在此日补排</span></div>
-      </div>
-
-      <!-- 第7天休整 → 第8天去米尔福德 -->
-      <div class="variant-content" id="milford-on-day8">
-        <div style="font-weight:600; font-size:0.9rem; margin: 0 0 6px; color:#0f4c81;">📅 第8天 = 米尔福德峡湾（超长大日 ⚠️）</div>
-        <ul class="timeline">
-          <li><span class="time">早上6:00</span><span class="act"><strong>⏰ 从皇后镇超早出发</strong><span class="note">前一晚备好零食、饮水、雨衣。</span></span></li>
-          <li><span class="time">8:00</span><span class="act"><strong>抵达蒂阿瑙（Te Anau）— 加油 + 早餐</strong><span class="note">这是前往米尔福德峡湾的最后一个加油站，千万不要跳过！</span></span></li>
-          <li><span class="time">9:30</span><span class="act"><strong>镜湖打卡停留</strong><span class="note">平坦小路，湖面倒影极美。约15分钟。</span></span></li>
-          <li><span class="time">10:00</span><span class="act"><strong>深渊（The Chasm）瀑布步道</strong><span class="note">约20分钟，步道平缓。</span></span></li>
-          <li><span class="time">10:30</span><span class="act"><strong>抵达米尔福德峡湾</strong></span></li>
-          <li><span class="time">11:00</span><span class="act"><strong>🚢 米尔福德峡湾经典游船（1小时45分钟）</strong><span class="note">斯特林瀑布、神奇峰、海豹、海豚。southerndiscoveries.co.nz</span></span></li>
-          <li><span class="time">12:45</span><span class="act"><strong>在米尔福德峡湾码头咖啡馆用午餐</strong></span></li>
-          <li><span class="time">13:45</span><span class="act"><strong>开始驾车返回皇后镇</strong></span></li>
-          <li><span class="time">约18:00</span><span class="act"><strong>回到皇后镇</strong></span></li>
-          <li><span class="time">19:00</span><span class="act"><strong>晚餐 — 大家都辛苦了！🍽️</strong></span></li>
-        </ul>
-        <div class="info-row">
-          <span class="info-pill book">🔴 米尔福德游船需提前数月预订 — 12月极易售罄！</span>
-          <span class="info-pill warn">⛽ 务必在蒂阿瑙加满油 — 米尔福德峡湾没有加油站！</span>
-        </div>
-      </div>
-
-      <!-- 未做选择时的默认提示 -->
-      <div class="variant-content active" id="day8-pending">
-        <div style="background:#f1f5f9; border-radius:8px; padding:14px; color:#6b7280; font-size:0.88rem; text-align:center;">
-          ⬆️ 请先在第7天卡片中选择米尔福德峡湾的时间，才能看到第8天的安排。
-        </div>
+      <div class="friend-line" data-iso="2026-12-28"></div>
+      <ul class="timeline">
+        <li class="meetup"><span class="time">6:30</span><span class="act"><strong>📍 集合：Queenstown Visitor Centre（RealNZ）</strong> <a href="https://www.google.com/maps/search/?api=1&query=Queenstown%20Visitor%20Centre" target="_blank" rel="noopener">[地图]</a><span class="note">提前15分钟报到（6:45 出发）。</span></span></li>
+        <li><span class="time">6:45</span><span class="act"><strong>🚢 米尔福德峡湾 Signature Cruise and Coach 出发</strong><span class="note">巴士 + 游船，全程由 RealNZ 安排，无需自驾。</span></span></li>
+        <li><span class="time">约19:50</span><span class="act"><strong>返回皇后镇</strong></span></li>
+      </ul>
+      <div class="info-row">
+        <span class="info-pill green">🔒 已订：7位成人 + 1位婴儿 · NZD 2,438（≈MYR 6,217）— 11月9日 WhatsApp 群 Kung Shin Zhou 已订</span>
+        <span class="info-pill">💳 无现金支付</span>
+        <span class="info-pill">🎒 携带：防滑鞋、防水保暖外套、驱虫液</span>
       </div>
     </div>
   </div>
@@ -735,24 +720,27 @@
     <div class="day-header" onclick="toggleDay(this)">
       <span class="day-badge">第9天</span>
       <div>
-        <div class="day-title">周二 12月29日 — 探险 / 自由活动日 🎿</div>
-        <div class="day-subtitle">按各人喜好分组活动 · 雄伟山脉（The Remarkables）风景驾车</div>
+        <div class="day-title">周二 12月29日 — TSS Earnslaw 蒸汽船 + Walter Peak 农场之旅 🚢</div>
+        <div class="day-subtitle">上午自由 · 15:00–18:30 复古蒸汽船 · 已订</div>
       </div>
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
+      <div class="friend-line" data-iso="2026-12-29"></div>
       <ul class="timeline">
-        <li><span class="time">上午</span><span class="act"><strong>按喜好分组活动：</strong><br>
+        <li><span class="time">上午</span><span class="act"><strong>自由活动 / 按喜好分组：</strong><br>
           <span style="color:#0066cc;">🧗 年轻成员：</span>极速喷射快艇 / 蹦极 / 高空滑翔<br>
           <span style="color:#059669;">👴 长辈 + 江愷恒：</span>皇后镇花园（湖边平坦公园，非常适合小朋友）
         </span></li>
         <li><span class="time">13:00</span><span class="act"><strong>汇合一起用午餐</strong></span></li>
-        <li><span class="time">14:30</span><span class="act"><strong>雄伟山脉风景驾车</strong><span class="note">驾车前往The Remarkables滑雪区——12月虽未营业，但风景公路全程开放，山景令人叹为观止。</span></span></li>
-        <li><span class="time">17:00</span><span class="act"><strong>返回皇后镇</strong></span></li>
+        <li class="meetup"><span class="time">14:40</span><span class="act"><strong>📍 集合：Steamer Wharf（TSS Earnslaw 游客中心）</strong> <a href="https://www.google.com/maps/search/?api=1&query=Steamer%20Wharf%2C%20Queenstown" target="_blank" rel="noopener">[地图]</a><span class="note">至少提前20分钟在 TSS Earnslaw 游客中心，或码头蒸汽船前领登船牌；开船前5分钟（14:55）截止办理。停车位有限，预留30分钟（Man St、Church St 停车场）。</span></span></li>
+        <li><span class="time">15:00–18:30</span><span class="act"><strong>🚢 TSS Earnslaw 复古蒸汽船 + Walter Peak 农场之旅</strong></span></li>
         <li><span class="time">19:00</span><span class="act"><strong>团体晚餐</strong></span></li>
       </ul>
       <div class="info-row">
-        <span class="info-pill">🏄 最后一个完整活动日 — 让每个人都做自己喜欢的事！</span>
+        <span class="info-pill green">🔒 已订：NZD 1,188（≈MYR 3,029）· 订单号 390578697 — 11月9日 WhatsApp 群 Kung Shin Zhou 已订</span>
+        <span class="info-pill">💳 无现金支付</span>
+        <span class="info-pill">🕒 Kung Shin Zhou 选15:00，让大家在米尔福德之后休息</span>
       </div>
     </div>
   </div>
@@ -768,6 +756,10 @@
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
+      <ul class="timeline">
+        <li class="meetup"><span class="time">10:00</span><span class="act"><strong>📍 建议：从 Peaceful inviting home（住处）出发</strong> <a href="https://www.google.com/maps/search/?api=1&query=Peaceful%20inviting%20home%20with%20lake%20%26%20mountain%20views%2C%20Queenstown" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-30"></div>
       <ul class="timeline">
         <li><span class="time">上午</span><span class="act"><strong>收拾行李，结清住宿费用</strong></span></li>
         <li><span class="time">10:00</span><span class="act"><strong>最后一次沿瓦卡蒂普湖晨走</strong></span></li>
@@ -794,6 +786,10 @@
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
+      <ul class="timeline">
+        <li class="meetup"><span class="time">7:30</span><span class="act"><strong>📍 建议：驱车前往皇后镇机场 Queenstown Airport</strong> <a href="https://www.google.com/maps/search/?api=1&query=Queenstown%20Airport" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2026-12-31"></div>
       <div style="font-weight:600; font-size:0.88rem; color:#64748b; margin-bottom:8px;">👨‍👩‍👧 全体行程</div>
       <ul class="timeline">
         <li><span class="time">7:00</span><span class="act"><strong>全体退房</strong></span></li>
@@ -830,6 +826,18 @@
       <span class="day-chevron">▼</span>
     </div>
     <div class="day-body">
+      <ul class="timeline">
+        <li class="meetup"><span class="time">待确认</span><span class="act"><strong>📍 入住 Tokoroa 小屋：Spacious, Tranquil rural cottage（已订）</strong> <a href="https://www.google.com/maps/search/?api=1&query=Spacious%2C%20Tranquil%20rural%20cottage%2C%20Tokoroa" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2027-01-01"></div>
+      <ul class="timeline">
+        <li class="meetup"><span class="time">待确认</span><span class="act"><strong>📍 建议：从 Tokoroa 小屋出发</strong> <a href="https://www.google.com/maps/search/?api=1&query=Spacious%2C%20Tranquil%20rural%20cottage%2C%20Tokoroa" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2027-01-02"></div>
+      <ul class="timeline">
+        <li class="meetup"><span class="time">待确认</span><span class="act"><strong>📍 入住 Jetpark Hotel（已订，奥克兰机场附近）</strong> <a href="https://www.google.com/maps/search/?api=1&query=Jetpark%20Hotel%2C%20Auckland%20Airport" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2027-01-03"></div>
 
       <!-- 已确认：奥克兰（机票已购） -->
       <div style="background:#dcfce7; border:2px solid #16a34a; border-radius:10px; padding:16px; margin-bottom:16px;">
@@ -869,6 +877,10 @@
     </div>
     <div class="day-body">
       <ul class="timeline">
+        <li class="meetup"><span class="time">16:00</span><span class="act"><strong>📍 租车 B 还车：Dollar（奥克兰机场航站楼）</strong> <a href="https://www.google.com/maps/search/?api=1&query=Dollar%20Auckland%20Airport" target="_blank" rel="noopener">[地图]</a></span></li>
+      </ul>
+      <div class="friend-line" data-iso="2027-01-04"></div>
+      <ul class="timeline">
         <li><span class="time">16:00</span><span class="act"><strong>🚗 租车 B 还车（奥克兰机场 Dollar 门店）</strong><span class="note">Kung Shin Zhou 与朋友留在新西兰，江家三口飞走后由她们 16:00 还车（10月18日 Kung Shin Hean 确认）。</span></span></li>
         <li><span class="time">08:15</span><span class="act"><strong>✈️ 奥克兰 → 香港（CX128）起飞</strong></span></li>
         <li><span class="time">14:35</span><span class="act"><strong>抵达香港（HKG）</strong></span></li>
@@ -882,7 +894,7 @@
 
 <!-- 底部固定按钮 -->
 <div class="finalize-section">
-  <div class="finalize-note" id="finalize-note">还剩 3 项决策未完成。</div>
+  <div class="finalize-note" id="finalize-note">还剩 2 项决策未完成。</div>
   <button class="finalize-btn" id="finalize-btn" onclick="openPrintModal()" disabled>
     🏁 生成最终行程
   </button>
@@ -908,11 +920,278 @@
   </div>
 </div>
 
+<script id="where-lib">
+// 无 DOM 依赖。getItineraryDays() 读取全局 decisions（运行时才读）。
+const STAYS = {
+  akl: { name: '住宿名称待补', town: '奥克兰', q: null },
+  chc: { name: 'A Great Location 4 bedrooms, quiet and comfort!', town: '基督城', q: 'A Great Location 4 bedrooms, Christchurch' },
+  tekapo: { name: 'Lake Ophua House', town: '特卡波湖', q: 'Lake Ophua House, Lake Opuha' },
+  twizel: { name: 'Beaut Views From Glencairn', town: '特威泽尔', q: 'Beaut Views From Glencairn, Twizel' },
+  wanaka: { name: 'Magic on McLeod', town: '瓦纳卡', q: 'Magic on McLeod, Wanaka' },
+  queenstown: { name: 'Peaceful inviting home with lake & mountain views', town: '皇后镇', q: 'Peaceful inviting home with lake & mountain views, Queenstown' },
+  tokoroa: { name: 'Spacious, Tranquil rural cottage', town: 'Tokoroa', q: 'Spacious, Tranquil rural cottage, Tokoroa' },
+  jetpark: { name: 'Jetpark Hotel', town: '奥克兰', q: 'Jetpark Hotel, Auckland Airport' },
+};
+
+// 每天：[白天所在 town, 当晚 stay, free 空闲时段]
+const DAY_META = {
+  '12-18': ['奥克兰', STAYS.akl, '全天'],
+  '12-19': ['奥克兰', STAYS.akl, '上午10:00 后'],
+  '12-20': ['奥克兰', STAYS.akl, '晚上19:00 后'],
+  '12-21': ['基督城', STAYS.chc, '15:00 后市区'],
+  '12-22': ['特卡波湖', STAYS.tekapo, '15:30 后'],
+  '12-23': ['特威泽尔', STAYS.twizel, '19:00 后'],
+  '12-24': ['瓦纳卡', STAYS.wanaka, '14:00 后'],
+  '12-25': ['瓦纳卡', STAYS.wanaka, '上午 / 14:30 后'],
+  '12-26': ['皇后镇', STAYS.queenstown, '14:00 后'],
+  '12-27': ['皇后镇', STAYS.queenstown, '全天（休整日）'],
+  '12-28': ['皇后镇', STAYS.queenstown, '约20:00 后'],
+  '12-29': ['皇后镇', STAYS.queenstown, '上午自由 / 18:30 后'],
+  '12-30': ['皇后镇', STAYS.queenstown, '全天'],
+  '12-31': ['皇后镇', STAYS.akl, '无空闲'],
+};
+
+function mapUrl(place) {
+  return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(place);
+}
+
+function getItineraryDays() {
+  const days = [
+    { date: '12月18日', title: '🚗 租车 A 取车', items: [
+      ['待确认', '📍 租车 A 取车 — 地点待确认'],
+      ['12月18日', '租车 A 取车 — 丰田汉兰达 7座（或同级）· Ezi · 订单号 1009590245 · Kung Shin Zhou 与朋友自用，取还车由她们安排（10月18日 Kung Shin Hean 确认）'],
+      ['', '已订 NZD 753.23（≈RM 1,770）· 全险 · 押金约 NZD 400 预授权（还车后约30天释放）'],
+      ['', '🏠 奥克兰住宿（名称待补）已订 · 12月18日–21日（3晚）· 6位住客 · RM 3,284.68（Ahreezia 垫付） · 10月18日 Kung Shin Hean 提供的预订截图确认'],
+    ]},
+    { date: '12月19日', title: '抵达奥克兰（江家三口）', items: [
+      ['约6:45', '📍 抵达：奥克兰国际机场 Auckland Airport（CX195）'],
+      ['约6:45', '抵达奥克兰 — 国泰航空 CX195（香港出发）', { booked: true, place: 'Auckland Airport', end: '8:30' }],
+      ['约8:30', '办理入住奥克兰住宿（已订）— 奥克兰住宿（名称待补）已订 · 12月18日–21日（3晚）· 6位住客 · RM 3,284.68（Ahreezia 垫付） · 10月18日 Kung Shin Hean 提供的预订截图确认'],
+      ['上午10:00', '休息，从长途飞行中恢复体力'],
+      ['下午', '轻松游览 — 维多利亚港湾 / 天空塔'],
+      ['晚上', '就近用晚餐'],
+    ]},
+    { date: '12月20日', title: decisions.hobbiton === 'yes' ? '奥克兰 — 霍比特人村一日游' : '奥克兰 — 市区游览', items: decisions.hobbiton === 'yes' ? [
+      ['上午', '📍 建议：从奥克兰住宿出发 — 地点待确认（住宿名称待补）'],
+      ['早上7:00', '从奥克兰出发→马塔马塔（约2小时）'],
+      ['9:15', '抵达霍比特人电影场景地'],
+      ['9:30', '霍比特人村导览（2小时）— hobbitontours.com（需提前预订）'],
+      ['12:30', '在马塔马塔用午餐'],
+      ['下午2:00', '驾车返回奥克兰'],
+      ['约4:00', '回到奥克兰，休息、整理行李'],
+      ['晚上7:00', '早点吃晚饭，早点休息（明天搭 JQ231 11:40 起飞）'],
+    ] : [
+      ['上午', '📍 建议：从奥克兰住宿出发 — 地点待确认（住宿名称待补）'],
+      ['上午', '睡懒觉，悠闲吃早餐'],
+      ['10:00', '天空塔'],
+      ['12:00', '维多利亚港湾午餐'],
+      ['下午2:00', '奥克兰域公园 / 战争纪念博物馆'],
+      ['下午5:00', '返回酒店，整理行李'],
+      ['晚上7:00', '早点吃晚饭，早点休息（明天搭 JQ231 11:40 起飞）'],
+    ]},
+    { date: '12月21日（第1天）', title: '奥克兰→基督城 · 全体汇合', items: [
+      ['13:05', '📍 全体汇合：基督城机场 CHC 到达厅', { booked: true, place: 'Christchurch Airport', end: '14:30' }],
+      ['11:40', '搭乘JQ231出发（全体8人）', { booked: true, place: 'Auckland Airport', end: '13:05' }],
+      ['13:05', '抵达基督城 — 租车 A 今天还车（Kung Shin Zhou 与朋友自用，取还车由她们安排（10月18日 Kung Shin Hean 确认））'],
+      ['待确认', '📍 🚗 全体提取团体用车 2台 RAV4（8人分乘2辆车）— 取车地点/时间待确认'],
+      ['约14:30', '办理入住 A Great Location 4 bedrooms（已预订）'],
+      ['15:00', '基督城古典有轨电车'],
+      ['16:00', '基督城植物园'],
+      ['17:30', '新摄政街（New Regent Street）'],
+      ['19:00', '🎉 第一顿团体晚餐 — 8人齐聚！'],
+    ]},
+    { date: '12月22日（第2天）', title: '驾车前往特卡波湖', items: [
+      ['8:30', '📍 建议：从 A Great Location 4 bedrooms（住处）出发'],
+      ['8:30', '从基督城出发'],
+      ['10:00', '途经杰拉尔丁（面包店、上午茶）'],
+      ['10:45', '伯克斯帕斯（Burkes Pass）'],
+      ['12:00', '抵达特卡波湖'],
+      ['12:30', '欣赏湖景，用午餐'],
+      ['14:00', '好牧羊人教堂'],
+      ['14:30', '羽扇豆花田'],
+      ['15:30', '办理入住 Lake Ophua House（已预订）— 房东 Mark · Ashwick Flat（Lake Opuha 附近）· 12月22日 15:00 后入住 · 12月23日 10:00 前退房'],
+      ['21:00', '⭐ 黑暗天空项目星空观赏（🔴 尚未预订 — 务必提前预订）'],
+    ]},
+    { date: '12月23日（第3天）', title: '库克山当日游 → 特威泽尔过夜', items: [
+      ['8:00', '📍 建议：从 Lake Ophua House（住处）出发'],
+      ['8:00', '早餐后退房，离开特卡波（须 10:00 前退房 · Ashwick Flat · 房东 Mark）'],
+      ['9:00', '📸 普卡基湖打卡停留'],
+      ['10:30', '抵达库克山村（阿奥拉基）'],
+      ['11:00', '🥾 胡克谷步道（来回约3小时，长辈可走前半段折返）'],
+      ['14:30', '库克山游客中心 / Sir Edmund Hillary 中心'],
+      ['16:00', '驾车前往特威泽尔（约50分钟）'],
+      ['17:00', '入住特威泽尔 Beaut Views From Glencairn（已预订）'],
+      ['19:00', '在住处自煮晚餐'],
+    ]},
+    { date: '12月24日（第4天）', title: '驾车前往瓦纳卡 — 平安夜 🎄', items: [
+      ['9:00', '📍 建议：从 Beaut Views From Glencairn（住处）出发'],
+      ['9:00', '从特威泽尔出发（约2小时20分）'],
+      ['9:15', '可选：特威泽尔三文鱼农场'],
+      ['10:00', '经 Lindis Pass 山口'],
+      ['12:00', '抵达瓦纳卡，入住 Magic on McLeod（已预订）'],
+      ['14:00', '📸 瓦纳卡孤独之树'],
+      ['15:00', '瓦纳卡湖畔漫步'],
+      ['17:00', '游览瓦纳卡镇中心'],
+      ['19:30', '🎄 平安夜晚餐（需订位）'],
+    ]},
+    { date: '12月25日（第5天）', title: '圣诞节在瓦纳卡 🎄', items: [
+      ['10:30', '📍 建议：从 Magic on McLeod（住处）出发'],
+      ['上午', '慵懒吃早餐'],
+      ['10:30', '谜幻世界（约1.5小时）'],
+      ['12:30', '圣诞午餐'],
+      ['14:30', '瓦纳卡湖畔漫步 + 自由时间'],
+      ['16:00', '可选：利彭葡萄庄园小酌'],
+      ['18:00', '🎁 团体圣诞晚餐'],
+    ]},
+    { date: '12月26日（第6天）', title: '驾车前往皇后镇（入住5晚）', items: [
+      ['10:00', '📍 建议：从 Magic on McLeod（住处）退房出发'],
+      ['上午', '瓦纳卡湖边晨走（最后一眼）'],
+      ['10:00', '退房瓦纳卡→皇后镇（' + ({ crown: '皇冠山脉路', cromwell: 'SH6省道经克伦威尔', mix: '皇冠山路去 + SH6回' })[decisions.wanaka] + '）'],
+      ['11:00–12:00', '抵达皇后镇，入住 Peaceful inviting home（已预订）'],
+      ['14:00', '皇后镇湖滨散步'],
+      ['15:30', '皇后镇缆车登鲍伯山峰'],
+      ['17:30', '游览皇后镇市中心'],
+      ['19:30', '晚餐'],
+    ]},
+    { date: '12月27日（第7天）', title: '皇后镇休整日 😴', items: [
+      ['12:30', '📍 建议：从 Peaceful inviting home（住处）出发'],
+      ['上午', '睡懒觉！'],
+      ['上午稍晚', '皇后镇海滨 & 汽船码头'],
+      ['12:30', '缆车 + 滑道车'],
+      ['15:00', '自由时间 — 购物、SPA、湖边漫步'],
+      ['18:30', '团体晚餐'],
+      ['', '⚠️ 提醒：明天（12月28日）米尔福德峡湾 — 6:30 集合'],
+    ]},
+    { date: '12月28日（第8天）', title: '米尔福德峡湾（巴士+游船）🏔️', items: [
+      ['6:30', '📍 集合：Queenstown Visitor Centre（RealNZ，提前15分钟报到）', { booked: true, place: 'Queenstown Visitor Centre', end: '6:45' }],
+      ['6:45', '🚢 米尔福德峡湾 Signature Cruise and Coach（RealNZ 巴士+游船）出发 · 约19:50 返回皇后镇', { booked: true, place: 'Milford Sound', end: '19:50' }],
+      ['', '🔒 已订 7位成人 + 1位婴儿 · NZD 2,438（≈MYR 6,217）· 11月9日 WhatsApp 群 Kung Shin Zhou 已订 · 无现金支付 · 携带防滑鞋、防水保暖外套、驱虫液'],
+    ]},
+    { date: '12月29日（第9天）', title: 'TSS Earnslaw 蒸汽船 + Walter Peak 农场之旅 🚢', items: [
+      ['上午', '自由活动 — 🧗 年轻成员：极速喷射快艇/蹦极 | 👴 长辈+江愷恒：皇后镇花园'],
+      ['13:00', '汇合一起用午餐'],
+      ['14:40', '📍 集合：Steamer Wharf（TSS Earnslaw 游客中心或蒸汽船前领登船牌，至少提前20分钟；14:55 截止办理）', { booked: true, place: 'Steamer Wharf, Queenstown', end: '15:00' }],
+      ['15:00', '🚢 TSS Earnslaw 复古蒸汽船 + Walter Peak 农场之旅 15:00–18:30', { booked: true, place: 'Steamer Wharf, Queenstown', end: '18:30' }],
+      ['', '🔒 已订 订单号 390578697 · NZD 1,188（≈MYR 3,029）· 11月9日 WhatsApp 群 Kung Shin Zhou 已订 · 无现金支付 · 停车位有限，预留30分钟（Man St / Church St 停车场）· 选15:00是为了米尔福德后让大家休息'],
+      ['19:00', '团体晚餐'],
+    ]},
+    { date: '12月30日（第10天）', title: '最后一天 & 告别晚宴 🥂', items: [
+      ['10:00', '📍 建议：从 Peaceful inviting home（住处）出发'],
+      ['上午', '收拾行李，结清费用'],
+      ['10:00', '最后一次瓦卡蒂普湖晨走'],
+      ['12:00', '午餐 — 每人挑选此行最爱的地方'],
+      ['14:00', '📸 皇后镇湖滨最终合照'],
+      ['15:00', '休闲 / 自由时间'],
+      ['19:00', '🥂 告别晚宴 — 推荐 Rata 或 Finz 海鲜（🔴 尚未预订 — 需提前订位）'],
+    ]},
+    { date: '12月31日（第11天）', title: '大家各自回家 ✈️ | 江家三口飞奥克兰', items: [
+      ['7:30', '📍 建议：驱车前往皇后镇机场 Queenstown Airport'],
+      ['7:00', '全体退房'],
+      ['7:30', '驾车前往皇后镇机场（约10分钟）'],
+      ['待确认', '🚗 团体用车 2台 RAV4 还车 — 还车地点/时间待确认'],
+      ['8:00', '机场办理登机手续'],
+      ['10:45', '大部队：搭乘捷星 JQ231 皇后镇→奥克兰（江家爸妈、表姐一家、妹妹）— 一路顺风！', { booked: true, place: 'Queenstown Airport', end: '12:35' }],
+      ['12:35', '大部队抵达奥克兰，各自搭机回马来西亚'],
+      ['上午–下午', '江家三口：在皇后镇自由活动，送别大家'],
+      ['17:30', '✈️ 江家三口：JQ298 皇后镇→奥克兰起飞', { booked: true, place: 'Queenstown Airport', end: '19:20' }],
+      ['19:20', '江家三口：抵达奥克兰'],
+      ['20:00', '🚗 奥克兰机场航站楼内 Dollar 取租车 B（日产奇骏 5座 · 至1月4日 16:00）'],
+      ['', '入住奥克兰住宿（已订）— 奥克兰住宿（名称待补）已订 · 12月31日–1月1日（1晚）· 6位住客 · RM 1,121.79（Ahreezia 垫付） · 10月18日 Kung Shin Hean 提供的预订截图确认，跨年夜 🎆'],
+    ]},
+  ];
+
+  if (decisions.postgroup === 'queenstown' || decisions.postgroup === 'split') {
+    days.push({ date: '1月1日', title: '皇后镇 — 格伦诺基一日游', items: [
+      ['全天', '格伦诺基一日游（距皇后镇45分钟）— 《指环王》取景地'],
+    ]});
+    days.push({ date: '1月2日', title: '皇后镇 — 自由 / SPA', items: [
+      ['全天', '自由活动 — 再游阿罗镇、购物、SPA放松'],
+    ]});
+  }
+  if (decisions.postgroup === 'split') {
+    days.push({ date: '1月3日', title: '飞往奥克兰', items: [
+      ['白天', '飞往奥克兰。办理入住机场附近酒店。'],
+      ['晚上', '早点休息 — 明天CX128 08:15起飞'],
+    ]});
+  }
+  if (decisions.postgroup === 'auckland') {
+    days.push({ town: 'Tokoroa', stay: STAYS.tokoroa, free: '全天', date: '1月1日', title: '新年快乐！奥克兰 → Tokoroa / Kinleith 乡村小屋 🎉', items: [
+      ['待确认', '📍 入住 Tokoroa 小屋：Spacious, Tranquil rural cottage（已订）'],
+      ['', '退房后开车前往 Tokoroa / Kinleith 的 Spacious, Tranquil rural cottage（距罗托鲁瓦约50分钟）'],
+      ['', '🔒 已订 1月1日–3日（2晚）· 8人 · NZD 1,150（≈MYR 2,933）· 10月18日 Kung Shin Zhou 13:33 群内确认已订'],
+    ]});
+    days.push({ town: 'Tokoroa', stay: STAYS.tokoroa, free: '全天', date: '1月2日', title: 'Tokoroa 自由活动 / 罗托鲁瓦一日游', items: [
+      ['待确认', '📍 建议：从 Tokoroa 小屋出发'],
+      ['全天', '住 Tokoroa 小屋（距罗托鲁瓦约50分钟）· 行程待定'],
+    ]});
+    days.push({ town: '奥克兰', stay: STAYS.jetpark, free: '全天', date: '1月3日', title: '退房 — 返回奥克兰方向', items: [
+      ['待确认', '📍 入住 Jetpark Hotel（已订，奥克兰机场附近）'],
+      ['', 'Tokoroa 小屋退房，返回奥克兰方向，准备1月4日 CX128 08:15 航班'],
+      ['', '🔒 入住 Jetpark Hotel（奥克兰机场附近） · 1晚 · NZD 421.21（RM 989）· Ahreezia 垫付'],
+    ]});
+  }
+  if (decisions.postgroup === 'queenstown') {
+    days.push({ date: '1月3日', title: '皇后镇最后一天', items: [
+      ['全天', '收拾行李，皇后镇最后晚餐'],
+      ['', '⚠️ 需确认1月4日皇后镇→奥克兰航班，国泰CX128 08:15起飞'],
+    ]});
+  }
+  days.push({ town: '奥克兰', stay: null, free: '无空闲', date: '1月4日', title: '飞回家 ✈️', items: [
+      ['16:00', '📍 租车 B 还车：Dollar（奥克兰机场航站楼）'],
+    ['16:00', '🚗 租车 B 还车（奥克兰机场 Dollar）— Kung Shin Zhou 与朋友留在新西兰，江家三口飞走后由她们 16:00 还车（10月18日 Kung Shin Hean 确认）'],
+    ['08:15', '奥克兰 → 香港（CX128）起飞 — 预订编号 E4DROV', { booked: true, place: 'Auckland Airport' }],
+    ['14:35', '抵达香港（HKG）'],
+    ['16:30', '香港 → 吉隆坡（CX729）起飞'],
+    ['20:35', '🏠 抵达吉隆坡 — 到家了！'],
+  ]});
+
+  days.forEach(d => {
+    const m = d.date.match(/(\d+)月(\d+)日/);
+    d.iso = (m[1] === '1' ? '2027' : '2026') + '-' + m[1].padStart(2, '0') + '-' + m[2].padStart(2, '0');
+    const meta = DAY_META[m[1] + '-' + m[2]];
+    if (meta && d.town === undefined) { d.town = meta[0]; d.stay = meta[1]; d.free = meta[2]; }
+  });
+  return days;
+}
+
+// 时间字符串 → 分钟；无法解析（待确认 / 空）→ null
+function parseItemTime(str) {
+  if (!str) return null;
+  const hm = str.match(/(\d{1,2}):(\d{2})/);
+  if (hm) {
+    let h = +hm[1];
+    if (/下午|晚上/.test(str) && h < 12) h += 12;
+    return h * 60 + +hm[2];
+  }
+  if (/上午/.test(str)) return 9 * 60;
+  if (/下午/.test(str)) return 14 * 60;
+  if (/晚上/.test(str)) return 19 * 60;
+  if (/全天/.test(str)) return 8 * 60;
+  return null;
+}
+
+// 当晚住宿 + 进行中的已订项目 + 当天下一个已订项目（只含已订，不含建议景点）
+function whereAt(days, isoDate, minutes) {
+  if (isoDate < '2026-12-18' || isoDate > '2027-01-04') return { outOfTrip: true };
+  const day = days.find(d => d.iso === isoDate);
+  const result = { outOfTrip: false, town: day ? day.town : null, stay: day ? day.stay : null, item: null, next: null };
+  if (!day) return result;
+  const booked = day.items
+    .filter(it => it[2] && it[2].booked)
+    .map(it => ({ time: it[0], act: it[1], place: it[2].place, start: parseItemTime(it[0]), end: parseItemTime(it[2].end) }))
+    .filter(it => it.start !== null)
+    .sort((a, b) => a.start - b.start);
+  const started = booked.filter(it => it.start <= minutes);
+  const cur = started[started.length - 1];
+  if (cur && (cur.end === null || minutes < cur.end)) result.item = cur;
+  result.next = booked.find(it => it.start > minutes) || null;
+  return result;
+}
+</script>
 <script>
 const decisions = {
   hobbiton: null,
   wanaka: null,
-  milford: null,
   postgroup: 'auckland'  // 已确认 — 已购买机票 JQ298（12月31日 17:30 皇后镇→奥克兰）
 };
 
@@ -925,10 +1204,6 @@ const decisionLabels = {
     crown: '🏔️ 瓦纳卡→皇后镇：走皇冠山脉路',
     cromwell: '🛣️ 瓦纳卡→皇后镇：走SH6省道经克伦威尔',
     mix: '↕️ 瓦纳卡→皇后镇：皇冠山路去 + SH6回（如需再往返瓦纳卡）'
-  },
-  milford: {
-    day7: '📅 米尔福德峡湾：第7天（12月27日）— 第8天休整',
-    day8: '📅 米尔福德峡湾：第8天（12月28日）— 第7天休整'
   },
   postgroup: {
     queenstown: '🏔️ 散伙后：皇后镇全4晚（12月31日–1月3日）',
@@ -974,46 +1249,59 @@ function showVariants(key, value) {
     });
     document.getElementById('wanaka-' + value).classList.add('active');
   }
-  if (key === 'milford') {
-    document.getElementById('milford-day7').classList.toggle('active', value === 'day7');
-    document.getElementById('milford-day8').classList.toggle('active', value === 'day8');
-    document.getElementById('day8-pending').classList.remove('active');
-    document.getElementById('recovery-day7').classList.toggle('active', value === 'day7');
-    document.getElementById('milford-on-day8').classList.toggle('active', value === 'day8');
-    if (value === 'day7') {
-      document.getElementById('day8-title').textContent = '周一 12月28日 — 皇后镇休整日 😴';
-      document.getElementById('day8-subtitle').textContent = '睡懒觉 · 缆车 + 滑道车 · 自由下午';
-    } else {
-      document.getElementById('day8-title').textContent = '周一 12月28日 — 米尔福德峡湾 🏔️';
-      document.getElementById('day8-subtitle').textContent = '早上6点出发 · 超长大日 ⚠️';
-    }
-    document.getElementById('day8').classList.add('open');
-    const body8 = document.getElementById('day8').querySelector('.day-body');
-    body8.style.display = 'block';
-  }
 }
 
 function updateProgress() {
-  const openKeys = ['hobbiton', 'wanaka', 'milford'];
+  const openKeys = ['hobbiton', 'wanaka'];
   const openDone = openKeys.filter(k => decisions[k] !== null).length;
-  const pct = (openDone / 3) * 100;
+  const pct = (openDone / 2) * 100;
   document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-count').textContent = openDone + ' / 3';
-  ['hobbiton','milford','wanaka'].forEach(key => {
+  document.getElementById('progress-count').textContent = openDone + ' / 2';
+  ['hobbiton','wanaka'].forEach(key => {
     const pill = document.getElementById('pill-' + key);
     if (decisions[key]) pill.classList.add('done');
     else pill.classList.remove('done');
   });
   const btn = document.getElementById('finalize-btn');
   const note = document.getElementById('finalize-note');
-  if (openDone === 3) {
+  if (openDone === 2) {
     btn.disabled = false;
     note.textContent = '🎉 全部决策完成！立即生成最终行程。';
   } else {
     btn.disabled = true;
-    const remaining = 3 - openDone;
+    const remaining = 2 - openDone;
     note.textContent = '还剩 ' + remaining + ' 项决策未完成。';
   }
+}
+
+function renderWhereBox() {
+  const date = document.getElementById('where-date').value;
+  const time = document.getElementById('where-time').value;
+  const out = document.getElementById('where-result');
+  const share = document.getElementById('where-share');
+  share.style.display = 'none';
+  if (!date || !time) { out.textContent = '选择日期和时间，查看我们当时所在的位置。'; return; }
+  const minutes = parseItemTime(time);
+  const r = whereAt(getItineraryDays(), date, minutes);
+  if (r.outOfTrip) { out.textContent = '该日期不在行程内（12月18日–1月4日）。'; return; }
+  const lines = [];
+  const msg = ['📍 ' + date + ' ' + time];
+  if (r.stay) {
+    const link = r.stay.q ? mapUrl(r.stay.q) : null;
+    lines.push('今晚住：' + r.stay.name + '（' + r.stay.town + '）' + (link ? ' <a href="' + link + '" target="_blank" rel="noopener">[地图]</a>' : ''));
+    msg.push('今晚住：' + r.stay.name + '（' + r.stay.town + '）' + (link ? ' ' + link : ''));
+  } else {
+    lines.push('当晚住宿：无（' + (r.town || '') + '）');
+  }
+  if (r.item) {
+    lines.push(r.item.time + ' 已订：' + r.item.act + ' @ ' + r.item.place);
+    msg.push(r.item.time + ' 已订：' + r.item.act + ' @ ' + r.item.place + ' ' + mapUrl(r.item.place));
+  } else if (r.next) {
+    lines.push('下一项已订：' + r.next.time + ' ' + r.next.act + ' @ ' + r.next.place);
+  }
+  out.innerHTML = lines.join('<br>');
+  share.href = 'https://wa.me/?text=' + encodeURIComponent(msg.join('\n'));
+  share.style.display = 'inline-block';
 }
 
 function toggleDay(header) {
@@ -1037,12 +1325,12 @@ function scrollTo(id) {
 }
 
 function openPrintModal() {
-  const openKeys = ['hobbiton', 'wanaka', 'milford'];
+  const openKeys = ['hobbiton', 'wanaka'];
   if (openKeys.some(k => decisions[k] === null)) return;
   document.getElementById('print-date').textContent = new Date().toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric' });
   const decList = document.getElementById('print-dec-list');
   decList.innerHTML = '';
-  const keyNames = { hobbiton:'霍比特人村', wanaka:'瓦纳卡路线', milford:'米尔福德峡湾' };
+  const keyNames = { hobbiton:'霍比特人村', wanaka:'瓦纳卡路线' };
   openKeys.forEach(key => {
     const div = document.createElement('div');
     div.className = 'dec-item';
@@ -1062,199 +1350,7 @@ function closePrintModal() {
 }
 
 function buildPrintItinerary() {
-  const days = [
-    { date: '12月18日', title: '🚗 租车 A 取车', items: [
-      ['12月18日', '租车 A 取车 — 丰田汉兰达 7座（或同级）· Ezi · 订单号 1009590245 · Kung Shin Zhou 与朋友自用，取还车由她们安排（10月18日 Kung Shin Hean 确认）'],
-      ['', '已订 NZD 753.23（≈RM 1,770）· 全险 · 押金约 NZD 400 预授权（还车后约30天释放）'],
-      ['', '🏠 奥克兰住宿（名称待补）已订 · 12月18日–21日（3晚）· 6位住客 · RM 3,284.68（Ahreezia 垫付） · 10月18日 Kung Shin Hean 提供的预订截图确认'],
-    ]},
-    { date: '12月19日', title: '抵达奥克兰（江家三口）', items: [
-      ['约6:45', '抵达奥克兰 — 国泰航空 CX195（香港出发）'],
-      ['约8:30', '办理入住奥克兰住宿（已订）— 奥克兰住宿（名称待补）已订 · 12月18日–21日（3晚）· 6位住客 · RM 3,284.68（Ahreezia 垫付） · 10月18日 Kung Shin Hean 提供的预订截图确认'],
-      ['上午10:00', '休息，从长途飞行中恢复体力'],
-      ['下午', '轻松游览 — 维多利亚港湾 / 天空塔'],
-      ['晚上', '就近用晚餐'],
-    ]},
-    { date: '12月20日', title: decisions.hobbiton === 'yes' ? '奥克兰 — 霍比特人村一日游' : '奥克兰 — 市区游览', items: decisions.hobbiton === 'yes' ? [
-      ['早上7:00', '从奥克兰出发→马塔马塔（约2小时）'],
-      ['9:15', '抵达霍比特人电影场景地'],
-      ['9:30', '霍比特人村导览（2小时）— hobbitontours.com（需提前预订）'],
-      ['12:30', '在马塔马塔用午餐'],
-      ['下午2:00', '驾车返回奥克兰'],
-      ['约4:00', '回到奥克兰，休息、整理行李'],
-      ['晚上7:00', '早点吃晚饭，早点休息（明天搭 JQ231 11:40 起飞）'],
-    ] : [
-      ['上午', '睡懒觉，悠闲吃早餐'],
-      ['10:00', '天空塔'],
-      ['12:00', '维多利亚港湾午餐'],
-      ['下午2:00', '奥克兰域公园 / 战争纪念博物馆'],
-      ['下午5:00', '返回酒店，整理行李'],
-      ['晚上7:00', '早点吃晚饭，早点休息（明天搭 JQ231 11:40 起飞）'],
-    ]},
-    { date: '12月21日（第1天）', title: '奥克兰→基督城 · 全体汇合', items: [
-      ['11:40', '搭乘JQ231出发（全体8人）'],
-      ['13:05', '抵达基督城 — 租车 A 今天还车（Kung Shin Zhou 与朋友自用，取还车由她们安排（10月18日 Kung Shin Hean 确认））'],
-      ['待确认', '🚗 全体提取团体用车 2台 RAV4（8人分乘2辆车）— 取车地点/时间待确认'],
-      ['约14:30', '办理入住 A Great Location 4 bedrooms（已预订）'],
-      ['15:00', '基督城古典有轨电车'],
-      ['16:00', '基督城植物园'],
-      ['17:30', '新摄政街（New Regent Street）'],
-      ['19:00', '🎉 第一顿团体晚餐 — 8人齐聚！'],
-    ]},
-    { date: '12月22日（第2天）', title: '驾车前往特卡波湖', items: [
-      ['8:30', '从基督城出发'],
-      ['10:00', '途经杰拉尔丁（面包店、上午茶）'],
-      ['10:45', '伯克斯帕斯（Burkes Pass）'],
-      ['12:00', '抵达特卡波湖'],
-      ['12:30', '欣赏湖景，用午餐'],
-      ['14:00', '好牧羊人教堂'],
-      ['14:30', '羽扇豆花田'],
-      ['15:30', '办理入住 Lake Ophua House（已预订）— 房东 Mark · Ashwick Flat（Lake Opuha 附近）· 12月22日 15:00 后入住 · 12月23日 10:00 前退房'],
-      ['21:00', '⭐ 黑暗天空项目星空观赏（🔴 尚未预订 — 务必提前预订）'],
-    ]},
-    { date: '12月23日（第3天）', title: '库克山当日游 → 特威泽尔过夜', items: [
-      ['8:00', '早餐后退房，离开特卡波（须 10:00 前退房 · Ashwick Flat · 房东 Mark）'],
-      ['9:00', '📸 普卡基湖打卡停留'],
-      ['10:30', '抵达库克山村（阿奥拉基）'],
-      ['11:00', '🥾 胡克谷步道（来回约3小时，长辈可走前半段折返）'],
-      ['14:30', '库克山游客中心 / Sir Edmund Hillary 中心'],
-      ['16:00', '驾车前往特威泽尔（约50分钟）'],
-      ['17:00', '入住特威泽尔 Beaut Views From Glencairn（已预订）'],
-      ['19:00', '在住处自煮晚餐'],
-    ]},
-    { date: '12月24日（第4天）', title: '驾车前往瓦纳卡 — 平安夜 🎄', items: [
-      ['9:00', '从特威泽尔出发（约2小时20分）'],
-      ['9:15', '可选：特威泽尔三文鱼农场'],
-      ['10:00', '经 Lindis Pass 山口'],
-      ['12:00', '抵达瓦纳卡，入住 Magic on McLeod（已预订）'],
-      ['14:00', '📸 瓦纳卡孤独之树'],
-      ['15:00', '瓦纳卡湖畔漫步'],
-      ['17:00', '游览瓦纳卡镇中心'],
-      ['19:30', '🎄 平安夜晚餐（需订位）'],
-    ]},
-    { date: '12月25日（第5天）', title: '圣诞节在瓦纳卡 🎄', items: [
-      ['上午', '慵懒吃早餐'],
-      ['10:30', '谜幻世界（约1.5小时）'],
-      ['12:30', '圣诞午餐'],
-      ['14:30', '瓦纳卡湖畔漫步 + 自由时间'],
-      ['16:00', '可选：利彭葡萄庄园小酌'],
-      ['18:00', '🎁 团体圣诞晚餐'],
-    ]},
-    { date: '12月26日（第6天）', title: '驾车前往皇后镇（入住5晚）', items: [
-      ['上午', '瓦纳卡湖边晨走（最后一眼）'],
-      ['10:00', '退房瓦纳卡→皇后镇（' + ({ crown: '皇冠山脉路', cromwell: 'SH6省道经克伦威尔', mix: '皇冠山路去 + SH6回' })[decisions.wanaka] + '）'],
-      ['11:00–12:00', '抵达皇后镇，入住 Peaceful inviting home（已预订）'],
-      ['14:00', '皇后镇湖滨散步'],
-      ['15:30', '皇后镇缆车登鲍伯山峰'],
-      ['17:30', '游览皇后镇市中心'],
-      ['19:30', '晚餐'],
-    ]},
-    { date: '12月27日（第7天）', title: decisions.milford === 'day7' ? '米尔福德峡湾 — 超长大日 ⚠️' : '皇后镇休整日 😴', items: decisions.milford === 'day7' ? [
-      ['早上6:00', '⏰ 超早从皇后镇出发'],
-      ['8:00', '蒂阿瑙 — 加油 + 早餐（最后加油站！）'],
-      ['9:30', '镜湖打卡停留'],
-      ['10:00', '深渊瀑布步道'],
-      ['10:30', '抵达米尔福德峡湾'],
-      ['11:00', '🚢 米尔福德峡湾经典游船（1小时45分钟）— 🔴 需提前预订'],
-      ['12:45', '码头咖啡馆午餐'],
-      ['13:45', '开始驾车返回皇后镇'],
-      ['约18:00', '回到皇后镇'],
-      ['19:00', '晚餐 🍽️'],
-    ] : [
-      ['上午', '睡懒觉！'],
-      ['上午稍晚', '皇后镇海滨 & 汽船码头'],
-      ['12:30', '缆车 + 滑道车'],
-      ['15:00', '自由时间 — 购物、SPA、湖边漫步'],
-      ['18:30', '团体晚餐'],
-    ]},
-    { date: '12月28日（第8天）', title: decisions.milford === 'day8' ? '米尔福德峡湾 — 超长大日 ⚠️' : '皇后镇休整日 😴', items: decisions.milford === 'day8' ? [
-      ['早上6:00', '⏰ 超早从皇后镇出发'],
-      ['8:00', '蒂阿瑙 — 加油 + 早餐（最后加油站！）'],
-      ['9:30', '镜湖打卡停留'],
-      ['10:00', '深渊瀑布步道'],
-      ['10:30', '抵达米尔福德峡湾'],
-      ['11:00', '🚢 米尔福德峡湾经典游船（1小时45分钟）— 🔴 需提前预订'],
-      ['12:45', '码头咖啡馆午餐'],
-      ['13:45', '开始驾车返回皇后镇'],
-      ['约18:00', '回到皇后镇'],
-      ['19:00', '晚餐 🍽️'],
-    ] : [
-      ['上午', '睡懒觉！'],
-      ['上午稍晚', '皇后镇海滨 & 汽船码头'],
-      ['12:30', '缆车 + 滑道车'],
-      ['15:00', '自由时间 — 购物、SPA、湖边漫步'],
-      ['18:30', '团体晚餐'],
-    ]},
-    { date: '12月29日（第9天）', title: '探险 / 自由活动日', items: [
-      ['上午', '🧗 年轻成员：极速喷射快艇/蹦极 | 👴 长辈+江愷恒：皇后镇花园'],
-      ['13:00', '汇合一起用午餐'],
-      ['14:30', '雄伟山脉（The Remarkables）风景驾车'],
-      ['17:00', '返回皇后镇'],
-      ['19:00', '团体晚餐'],
-    ]},
-    { date: '12月30日（第10天）', title: '最后一天 & 告别晚宴 🥂', items: [
-      ['上午', '收拾行李，结清费用'],
-      ['10:00', '最后一次瓦卡蒂普湖晨走'],
-      ['12:00', '午餐 — 每人挑选此行最爱的地方'],
-      ['14:00', '📸 皇后镇湖滨最终合照'],
-      ['15:00', '休闲 / 自由时间'],
-      ['19:00', '🥂 告别晚宴 — 推荐 Rata 或 Finz 海鲜（🔴 尚未预订 — 需提前订位）'],
-    ]},
-    { date: '12月31日（第11天）', title: '大家各自回家 ✈️ | 江家三口飞奥克兰', items: [
-      ['7:00', '全体退房'],
-      ['7:30', '驾车前往皇后镇机场（约10分钟）'],
-      ['待确认', '🚗 团体用车 2台 RAV4 还车 — 还车地点/时间待确认'],
-      ['8:00', '机场办理登机手续'],
-      ['10:45', '大部队：搭乘捷星 JQ231 皇后镇→奥克兰（江家爸妈、表姐一家、妹妹）— 一路顺风！'],
-      ['12:35', '大部队抵达奥克兰，各自搭机回马来西亚'],
-      ['上午–下午', '江家三口：在皇后镇自由活动，送别大家'],
-      ['17:30', '✈️ 江家三口：JQ298 皇后镇→奥克兰起飞'],
-      ['19:20', '江家三口：抵达奥克兰'],
-      ['20:00', '🚗 奥克兰机场航站楼内 Dollar 取租车 B（日产奇骏 5座 · 至1月4日 16:00）'],
-      ['', '入住奥克兰住宿（已订）— 奥克兰住宿（名称待补）已订 · 12月31日–1月1日（1晚）· 6位住客 · RM 1,121.79（Ahreezia 垫付） · 10月18日 Kung Shin Hean 提供的预订截图确认，跨年夜 🎆'],
-    ]},
-  ];
-
-  if (decisions.postgroup === 'queenstown' || decisions.postgroup === 'split') {
-    days.push({ date: '1月1日', title: '皇后镇 — 格伦诺基一日游', items: [
-      ['全天', '格伦诺基一日游（距皇后镇45分钟）— 《指环王》取景地'],
-    ]});
-    days.push({ date: '1月2日', title: '皇后镇 — 自由 / SPA', items: [
-      ['全天', '自由活动 — 再游阿罗镇、购物、SPA放松'],
-    ]});
-  }
-  if (decisions.postgroup === 'split') {
-    days.push({ date: '1月3日', title: '飞往奥克兰', items: [
-      ['白天', '飞往奥克兰。办理入住机场附近酒店。'],
-      ['晚上', '早点休息 — 明天CX128 08:15起飞'],
-    ]});
-  }
-  if (decisions.postgroup === 'auckland') {
-    days.push({ date: '1月1日', title: '新年快乐！奥克兰 → Tokoroa / Kinleith 乡村小屋 🎉', items: [
-      ['', '退房后开车前往 Tokoroa / Kinleith 的 Spacious, Tranquil rural cottage（距罗托鲁瓦约50分钟）'],
-      ['', '🔒 已订 1月1日–3日（2晚）· 8人 · NZD 1,150（≈MYR 2,933）· 10月18日 Kung Shin Zhou 13:33 群内确认已订'],
-    ]});
-    days.push({ date: '1月2日', title: 'Tokoroa 自由活动 / 罗托鲁瓦一日游', items: [
-      ['全天', '住 Tokoroa 小屋（距罗托鲁瓦约50分钟）· 行程待定'],
-    ]});
-    days.push({ date: '1月3日', title: '退房 — 返回奥克兰方向', items: [
-      ['', 'Tokoroa 小屋退房，返回奥克兰方向，准备1月4日 CX128 08:15 航班'],
-      ['', '🔒 入住 Jetpark Hotel（奥克兰机场附近） · 1晚 · NZD 421.21（RM 989）· Ahreezia 垫付'],
-    ]});
-  }
-  if (decisions.postgroup === 'queenstown') {
-    days.push({ date: '1月3日', title: '皇后镇最后一天', items: [
-      ['全天', '收拾行李，皇后镇最后晚餐'],
-      ['', '⚠️ 需确认1月4日皇后镇→奥克兰航班，国泰CX128 08:15起飞'],
-    ]});
-  }
-  days.push({ date: '1月4日', title: '飞回家 ✈️', items: [
-    ['16:00', '🚗 租车 B 还车（奥克兰机场 Dollar）— Kung Shin Zhou 与朋友留在新西兰，江家三口飞走后由她们 16:00 还车（10月18日 Kung Shin Hean 确认）'],
-    ['08:15', '奥克兰 → 香港（CX128）起飞 — 预订编号 E4DROV'],
-    ['14:35', '抵达香港（HKG）'],
-    ['16:30', '香港 → 吉隆坡（CX729）起飞'],
-    ['20:35', '🏠 抵达吉隆坡 — 到家了！'],
-  ]});
+  const days = getItineraryDays();
 
   return days.map(day => `
     <div class="print-day">
@@ -1266,8 +1362,18 @@ function buildPrintItinerary() {
   `).join('');
 }
 
+// 👋 朋友可会合：由 DAY_META（经 getItineraryDays）填充
+(function fillFriendLines() {
+  const days = getItineraryDays();
+  document.querySelectorAll('.friend-line').forEach(el => {
+    const d = days.find(x => x.iso === el.dataset.iso);
+    if (!d || !d.free) return;
+    el.textContent = d.free === '无空闲' ? '👋 无空闲' : '👋 朋友可会合：' + d.town + ' · ' + d.free;
+  });
+})();
+
 // 初始化：自动展开含决策的卡片
-const decisionCardIds = ['day-auckland-2', 'day6', 'day7', 'day-postgroup']; // day-postgroup已确认，仍展开供阅读
+const decisionCardIds = ['day-auckland-2', 'day6', 'day-postgroup']; // day-postgroup已确认，仍展开供阅读
 decisionCardIds.forEach(id => {
   const card = document.getElementById(id);
   if (card) card.classList.add('open');

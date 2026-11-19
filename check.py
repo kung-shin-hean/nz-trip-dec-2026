@@ -53,7 +53,8 @@ def check_balance(path, src):
 
 
 def check_js(path, src):
-    js = '\n'.join(re.findall(r'<script>(.*?)</script>', src, re.S))
+    # Any inline <script ...> block, including <script id="where-lib">; skip src= scripts.
+    js = '\n'.join(re.findall(r'<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>', src, re.S))
     if not js.strip():
         return
     tmp = None
